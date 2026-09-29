@@ -1,0 +1,38 @@
+import { Module } from '@nestjs/common';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { LoggerModule } from 'nestjs-pino';
+import { buildLoggerConfig } from './bootstrap/logger.config.js';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter.js';
+import { AppConfigModule } from './config/app-config.module.js';
+import { AppConfigService } from './config/app-config.service.js';
+import { DatabaseModule } from './database/database.module.js';
+import { HealthModule } from './modules/health/health.module.js';
+
+@Module({
+    imports: [
+        AppConfigModule,
+        LoggerModule.forRootAsync({
+            inject: [AppConfigService],
+            useFactory: buildLoggerConfig,
+        }),
+        ThrottlerModule.forRootAsync({
+            inject: [AppConfigService],
+            useFactory: (config: AppConfigService) => ({
+                throttlers: [
+                    {
+                        ttl: config.get('THROTTLE_TTL_MS'),
+                        limit: config.get('THROTTLE_LIMIT'),
+                    },
+                ],
+            }),
+        }),
+        DatabaseModule,
+        HealthModule,
+    ],
+    providers: [
+        { provide: APP_GUARD, useClass: ThrottlerGuard },
+        { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    ],
+})
+export class AppModule {}

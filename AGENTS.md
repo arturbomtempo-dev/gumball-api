@@ -17,6 +17,7 @@ A public, **read-only** REST API about *The Amazing World of Gumball*, meant to 
   - **No Swagger/OpenAPI/Scalar** or other documentation tooling until explicitly requested.
 - The approved stack is **NestJS + Prisma + Supabase (PostgreSQL)**, plus infrastructure that directly affects the API: Helmet, CORS, compression, rate limiting (`@nestjs/throttler`), validation (`class-validator`, `zod` for env), logging (`nestjs-pino`) and health checks (`@nestjs/terminus`). Ask before adding anything else.
 - When unsure whether something is in scope, ask instead of adding it.
+- Content must be exclusive to the universe of *The Amazing World of Gumball* (including *The Wonderfully Weird World of Gumball*). Do not import real-world products or promotional material (official video games, merchandise, crossovers with other Cartoon Network shows) even when the wiki documents them. Check with the maintainer before modeling any content type whose wiki category mixes in-universe and real-world items.
 
 ## Code conventions
 
@@ -84,4 +85,9 @@ Before reporting a task as done, run `format:check`, `lint`, `typecheck`, `test`
 
 - Supabase setup guide (pt-BR): `server/docs/supabase-setup.pt-BR.md`
 - Security baseline migration: `server/prisma/migrations/20260929000000_database_security/migration.sql`
-- Reference feature modules: `server/src/modules/characters/`, `server/src/modules/locations/` (self-referencing `parent` hierarchy) `server/src/modules/episodes/` (computed `previous`/`next` from `overallNumber`, date-range filters via `DateField`) `server/src/modules/seasons/` (aggregated counts from another table via `groupBy`) and `server/src/modules/songs/` (foreign key to `episodes` and a many-to-many join table to `characters`; join tables also get `apply_public_read_policy`)
+- Reference feature modules:
+  - `server/src/modules/characters/`
+  - `server/src/modules/locations/`: self-referencing `parent` hierarchy.
+  - `server/src/modules/episodes/`: computed `previous`/`next` from `overallNumber`, date-range filters via `DateField`.
+  - `server/src/modules/seasons/`: aggregated counts from another table via `groupBy`.
+  - `server/src/modules/songs/`: foreign key to `episodes` and a many-to-many join table to `characters`; join tables also get `apply_public_read_policy`.

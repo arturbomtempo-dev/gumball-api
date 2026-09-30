@@ -116,3 +116,57 @@ model Location {
   @@index([parentId])
   @@map("locations")
 }
+
+enum EpisodeSeries {
+  AMAZING_WORLD
+  WONDERFULLY_WEIRD_WORLD
+
+  @@map("episode_series")
+}
+
+enum EpisodeType {
+  EPISODE
+  SPECIAL
+  SHORT
+  PILOT
+  FILM
+
+  @@map("episode_type")
+}
+
+enum EpisodeStatus {
+  RELEASED
+  UNRELEASED
+  SCRAPPED
+
+  @@map("episode_status")
+}
+
+model Episode {
+  id                Int           @id @default(autoincrement())
+  slug              String        @unique @db.VarChar(160)
+  title             String        @db.VarChar(200)
+  description       String?
+  series            EpisodeSeries @default(AMAZING_WORLD)
+  type              EpisodeType   @default(EPISODE)
+  status            EpisodeStatus @default(RELEASED)
+  season            Int?          @db.SmallInt
+  episodeNumber     Int?          @map("episode_number") @db.SmallInt
+  overallNumber     Int?          @unique @map("overall_number") @db.SmallInt
+  productionCode    String?       @map("production_code") @db.VarChar(20)
+  usAirDate         DateTime?     @map("us_air_date") @db.Date
+  ukAirDate         DateTime?     @map("uk_air_date") @db.Date
+  writers           String[]      @default([])
+  storyboardArtists String[]      @default([]) @map("storyboard_artists")
+  imageUrl          String        @map("image_url") @db.VarChar(500)
+  createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([series, season, episodeNumber])
+  @@index([title])
+  @@index([type])
+  @@index([status])
+  @@index([season])
+  @@index([usAirDate])
+  @@map("episodes")
+}

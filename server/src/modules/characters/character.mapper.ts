@@ -1,9 +1,10 @@
-import type { Character } from '../../generated/prisma/client.js';
+import { toEpisodeReference } from '../episodes/episode-reference.js';
 import { animationStyleCodec, genderCodec, roleCodec, statusCodec } from './character.enums.js';
+import type { CharacterWithRelations } from './characters.repository.js';
 import type { CharacterResponseDto } from './dto/character-response.dto.js';
 
 export const CharacterMapper = {
-    toResponse: (character: Character): CharacterResponseDto => ({
+    toResponse: (character: CharacterWithRelations): CharacterResponseDto => ({
         id: character.id,
         slug: character.slug,
         name: character.name,
@@ -18,7 +19,7 @@ export const CharacterMapper = {
         status: statusCodec.toApi(character.status),
         animationStyle: animationStyleCodec.toApi(character.animationStyle),
         voiceActors: character.voiceActors,
-        firstAppearance: character.firstAppearance,
+        firstAppearance: toEpisodeReference(character.firstAppearance),
         colors: character.colors,
         image: character.imageUrl,
         url: `/characters/${character.id}`,

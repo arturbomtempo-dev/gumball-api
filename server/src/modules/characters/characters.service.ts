@@ -31,6 +31,7 @@ export class CharactersService {
                 animationStyle:
                     query.animationStyle && animationStyleCodec.toDatabase(query.animationStyle),
                 voiceActor: query.voiceActor,
+                firstAppearanceId: query.firstAppearanceId,
                 ids: query.ids,
             },
             sortField: sort.field,

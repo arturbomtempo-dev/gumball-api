@@ -3,6 +3,7 @@ import { PaginationQueryDto } from '../../../common/pagination/pagination-query.
 import { buildSortValues } from '../../../common/pagination/sort.js';
 import { Trim } from '../../../common/utils/trim.transform.js';
 import { EnumField } from '../../../common/validation/enum-field.decorator.js';
+import { IdField } from '../../../common/validation/id-field.decorator.js';
 import { IdListField } from '../../../common/validation/id-list-field.decorator.js';
 import { CHARACTER_LIMITS } from '../character.constraints.js';
 import {
@@ -55,6 +56,10 @@ export class ListCharactersQueryDto extends PaginationQueryDto {
     @IsString()
     @MaxLength(CHARACTER_LIMITS.voiceActor)
     voiceActor?: string;
+
+    @IsOptional()
+    @IdField()
+    firstAppearanceId?: number;
 
     @IsOptional()
     @IdListField(CHARACTER_LIMITS.ids)

@@ -1,6 +1,7 @@
+import { toEpisodeReference } from '../episodes/episode-reference.js';
+import type { LocationResponseDto } from './dto/location-response.dto.js';
 import { locationTypeCodec } from './location.enums.js';
 import type { LocationWithParent } from './locations.repository.js';
-import type { LocationResponseDto } from './dto/location-response.dto.js';
 
 const locationUrl = (id: number) => `/locations/${id}`;
 
@@ -19,7 +20,7 @@ export const LocationMapper = {
                   url: locationUrl(location.parent.id),
               }
             : null,
-        firstAppearance: location.firstAppearance,
+        firstAppearance: toEpisodeReference(location.firstAppearance),
         image: location.imageUrl,
         url: locationUrl(location.id),
         createdAt: location.createdAt.toISOString(),

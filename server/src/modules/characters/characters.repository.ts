@@ -3,12 +3,20 @@ import { PrismaService } from '../../database/prisma.service.js';
 import {
     Prisma,
     type AnimationStyle,
-    type Character,
     type CharacterGender,
     type CharacterRole,
     type CharacterStatus,
 } from '../../generated/prisma/client.js';
+import { EPISODE_REFERENCE_SELECT } from '../episodes/episode-reference.js';
 import type { CharacterSortField } from './dto/list-characters-query.dto.js';
+
+const CHARACTER_INCLUDE = {
+    firstAppearance: { select: EPISODE_REFERENCE_SELECT },
+} satisfies Prisma.CharacterInclude;
+
+export type CharacterWithRelations = Prisma.CharacterGetPayload<{
+    include: typeof CHARACTER_INCLUDE;
+}>;
 
 export interface CharacterFilters {
     search?: string;
@@ -18,6 +26,7 @@ export interface CharacterFilters {
     status?: CharacterStatus;
     animationStyle?: AnimationStyle;
     voiceActor?: string;
+    firstAppearanceId?: number;
     ids?: number[];
 }
 
@@ -33,12 +42,15 @@ export interface CharacterListParams {
 export class CharactersRepository {
     constructor(private readonly prisma: PrismaService) {}
 
-    async findMany(params: CharacterListParams): Promise<{ items: Character[]; total: number }> {
+    async findMany(
+        params: CharacterListParams
+    ): Promise<{ items: CharacterWithRelations[]; total: number }> {
         const where = this.buildWhere(params.filters);
 
         const [items, total] = await this.prisma.$transaction([
             this.prisma.character.findMany({
                 where,
+                include: CHARACTER_INCLUDE,
                 orderBy: [{ [params.sortField]: params.sortDirection }, { id: 'asc' }],
                 skip: params.skip,
                 take: params.take,
@@ -49,20 +61,23 @@ export class CharactersRepository {
         return { items, total };
     }
 
-    findById(id: number): Promise<Character | null> {
-        return this.prisma.character.findUnique({ where: { id } });
+    findById(id: number): Promise<CharacterWithRelations | null> {
+        return this.prisma.character.findUnique({ where: { id }, include: CHARACTER_INCLUDE });
     }
 
-    findBySlug(slug: string): Promise<Character | null> {
-        return this.prisma.character.findUnique({ where: { slug } });
+    findBySlug(slug: string): Promise<CharacterWithRelations | null> {
+        return this.prisma.character.findUnique({ where: { slug }, include: CHARACTER_INCLUDE });
     }
 
-    async findRandom(count: number): Promise<Character[]> {
+    async findRandom(count: number): Promise<CharacterWithRelations[]> {
         const rows = await this.prisma.$queryRaw<{ id: number }[]>(
             Prisma.sql`SELECT id FROM characters ORDER BY random() LIMIT ${count}`
         );
         const ids = rows.map((row) => row.id);
-        const characters = await this.prisma.character.findMany({ where: { id: { in: ids } } });
+        const characters = await this.prisma.character.findMany({
+            where: { id: { in: ids } },
+            include: CHARACTER_INCLUDE,
+        });
         const byId = new Map(characters.map((character) => [character.id, character]));
 
         return ids.flatMap((id) => byId.get(id) ?? []);
@@ -74,6 +89,7 @@ export class CharactersRepository {
             role: filters.role,
             status: filters.status,
             animationStyle: filters.animationStyle,
+            firstAppearanceId: filters.firstAppearanceId,
         };
 
         if (filters.ids) {

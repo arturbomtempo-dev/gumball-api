@@ -31,6 +31,7 @@ A public, **read-only** REST API about *The Amazing World of Gumball*, meant to 
 - Only `GET` routes. The API never creates, updates or deletes data over HTTP, and there is no authentication. Like PokéAPI or the Rick and Morty API, data is maintained outside the API: the maintainer edits it directly in Supabase.
 - List endpoints are paginated with `PaginationQueryDto` and `paginate()` from `src/common/pagination/`, and every filter is validated in a query DTO. Route params go through `ParseIdPipe` / `ParseSlugPipe`.
 - Enums are stored uppercase in the database and exposed in lowercase kebab-case through `createEnumCodec` (`src/common/utils/enum-codec.ts`). Reuse the shared query helpers in `src/common/` (`EnumField`, `IdField`, `IdListField`, `buildSortValues`/`parseSort`, cache-control constants) instead of redefining them per module.
+- Links between resources are real foreign keys, never free-text titles. Expose them as reference objects (`id`, `slug`, a display field and `url`). Any field pointing to an episode must use `EPISODE_REFERENCE_SELECT` and `toEpisodeReference` from `src/modules/episodes/episode-reference.ts`, and offer a matching `...Id` filter (for example `firstAppearanceId`).
 - Errors go through `AllExceptionsFilter`, which produces one consistent shape: `statusCode`, `error`, `message`, `path`, `timestamp`.
 - Formatting: Prettier (single quotes, trailing commas). Linting: oxlint.
 

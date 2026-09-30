@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { parseSort } from '../../common/pagination/sort.js';
-import type { LocationResponseDto } from './dto/location-response.dto.js';
 import type { ListLocationsQueryDto, LocationSortField } from './dto/list-locations-query.dto.js';
+import type { LocationResponseDto } from './dto/location-response.dto.js';
 import { locationTypeCodec } from './location.enums.js';
 import { LocationMapper } from './location.mapper.js';
 import { LocationsRepository } from './locations.repository.js';
@@ -23,6 +23,7 @@ export class LocationsService {
                 search: query.search,
                 type: query.type && locationTypeCodec.toDatabase(query.type),
                 parentId: query.parentId,
+                firstAppearanceId: query.firstAppearanceId,
                 ids: query.ids,
             },
             sortField: sort.field,

@@ -29,6 +29,10 @@ export class ListLocationsQueryDto extends PaginationQueryDto {
     parentId?: number;
 
     @IsOptional()
+    @IdField()
+    firstAppearanceId?: number;
+
+    @IsOptional()
     @IdListField(LOCATION_LIMITS.ids)
     ids?: number[];
 

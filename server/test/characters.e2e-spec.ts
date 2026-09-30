@@ -105,6 +105,22 @@ describe('Characters (e2e)', () => {
         expect(orderBy).toEqual([{ name: 'desc' }, { id: 'asc' }]);
     });
 
+    it('GET /characters filters by the first appearance episode', async () => {
+        readerMock.character.findMany.mockResolvedValueOnce([]);
+        readerMock.character.count.mockResolvedValueOnce(0);
+
+        await request(app.getHttpServer()).get('/characters?firstAppearanceId=1').expect(200);
+
+        const [{ where }] = readerMock.character.findMany.mock.calls[0] as [
+            { where: Record<string, unknown> },
+        ];
+        expect(where['firstAppearanceId']).toBe(1);
+    });
+
+    it('GET /characters rejects an invalid firstAppearanceId with 400', async () => {
+        await request(app.getHttpServer()).get('/characters?firstAppearanceId=the-dvd').expect(400);
+    });
+
     it.each([
         ['limit above the maximum', 'limit=101'],
         ['page zero', 'page=0'],
@@ -131,7 +147,27 @@ describe('Characters (e2e)', () => {
             slug: 'gumball-watterson',
             url: '/characters/1',
         });
-        expect(readerMock.character.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+        expect(readerMock.character.findUnique).toHaveBeenCalledWith({
+            where: { id: 1 },
+            include: {
+                firstAppearance: {
+                    select: {
+                        id: true,
+                        slug: true,
+                        title: true,
+                        season: true,
+                        episodeNumber: true,
+                    },
+                },
+            },
+        });
+        expect(response.body.firstAppearance).toEqual({
+            id: 1,
+            slug: 'the-dvd',
+            title: 'The DVD',
+            code: 'S01E01',
+            url: '/episodes/1',
+        });
     });
 
     it('GET /characters/:id returns 404 for an unknown character', async () => {
@@ -157,6 +193,17 @@ describe('Characters (e2e)', () => {
 
         expect(readerMock.character.findUnique).toHaveBeenCalledWith({
             where: { slug: 'gumball-watterson' },
+            include: {
+                firstAppearance: {
+                    select: {
+                        id: true,
+                        slug: true,
+                        title: true,
+                        season: true,
+                        episodeNumber: true,
+                    },
+                },
+            },
         });
     });
 

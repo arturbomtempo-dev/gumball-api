@@ -1,3 +1,4 @@
+import type { EpisodeReferenceDto } from '../../episodes/dto/episode-response.dto.js';
 import type { ApiAnimationStyle, ApiGender, ApiRole, ApiStatus } from '../character.enums.js';
 
 export class CharacterResponseDto {
@@ -15,7 +16,7 @@ export class CharacterResponseDto {
     status: ApiStatus;
     animationStyle: ApiAnimationStyle;
     voiceActors: string[];
-    firstAppearance: string | null;
+    firstAppearance: EpisodeReferenceDto | null;
     colors: string[];
     image: string;
     url: string;

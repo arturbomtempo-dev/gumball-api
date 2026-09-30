@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service.js';
 import { Prisma, type SongType } from '../../generated/prisma/client.js';
+import { EPISODE_REFERENCE_SELECT } from '../episodes/episode-reference.js';
 import type { SongSortField } from './dto/list-songs-query.dto.js';
 
 const NULLABLE_SORT_FIELDS = new Set<SongSortField>(['durationSeconds']);
 
 const SONG_INCLUDE = {
-    episode: {
-        select: { id: true, slug: true, title: true, season: true, episodeNumber: true },
-    },
+    episode: { select: EPISODE_REFERENCE_SELECT },
     characters: {
         select: { character: { select: { id: true, slug: true, name: true } } },
         orderBy: { character: { id: 'asc' } },

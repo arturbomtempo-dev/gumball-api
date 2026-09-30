@@ -81,11 +81,17 @@ describe('Locations (e2e)', () => {
         expect(where).toEqual({
             type: 'SCHOOL_FACILITY',
             parentId: 2,
+            firstAppearanceId: undefined,
             id: { in: [3, 4] },
             name: { contains: 'room', mode: 'insensitive' },
         });
         expect(orderBy).toEqual([{ name: 'desc' }, { id: 'asc' }]);
-        expect(include).toEqual({ parent: { select: { id: true, slug: true, name: true } } });
+        expect(include).toEqual({
+            parent: { select: { id: true, slug: true, name: true } },
+            firstAppearance: {
+                select: { id: true, slug: true, title: true, season: true, episodeNumber: true },
+            },
+        });
     });
 
     it.each([
@@ -107,10 +113,25 @@ describe('Locations (e2e)', () => {
 
         const response = await request(app.getHttpServer()).get('/locations/2').expect(200);
 
-        expect(response.body).toMatchObject({ id: 2, url: '/locations/2' });
+        expect(response.body).toMatchObject({
+            id: 2,
+            url: '/locations/2',
+            firstAppearance: { id: 2, slug: 'the-responsible', code: 'S01E02', url: '/episodes/2' },
+        });
         expect(prismaMock.location.findUnique).toHaveBeenCalledWith({
             where: { id: 2 },
-            include: { parent: { select: { id: true, slug: true, name: true } } },
+            include: {
+                parent: { select: { id: true, slug: true, name: true } },
+                firstAppearance: {
+                    select: {
+                        id: true,
+                        slug: true,
+                        title: true,
+                        season: true,
+                        episodeNumber: true,
+                    },
+                },
+            },
         });
     });
 

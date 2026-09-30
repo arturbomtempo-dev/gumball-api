@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service.js';
 import { Prisma, type LocationType } from '../../generated/prisma/client.js';
+import { EPISODE_REFERENCE_SELECT } from '../episodes/episode-reference.js';
 import type { LocationSortField } from './dto/list-locations-query.dto.js';
 
 const LOCATION_INCLUDE = {
     parent: { select: { id: true, slug: true, name: true } },
+    firstAppearance: { select: EPISODE_REFERENCE_SELECT },
 } satisfies Prisma.LocationInclude;
 
 export type LocationWithParent = Prisma.LocationGetPayload<{ include: typeof LOCATION_INCLUDE }>;
@@ -13,6 +15,7 @@ export interface LocationFilters {
     search?: string;
     type?: LocationType;
     parentId?: number;
+    firstAppearanceId?: number;
     ids?: number[];
 }
 
@@ -73,6 +76,7 @@ export class LocationsRepository {
         const where: Prisma.LocationWhereInput = {
             type: filters.type,
             parentId: filters.parentId,
+            firstAppearanceId: filters.firstAppearanceId,
         };
 
         if (filters.ids) {

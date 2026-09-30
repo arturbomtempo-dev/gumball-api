@@ -50,26 +50,27 @@ enum AnimationStyle {
 }
 
 model Character {
-  id              Int             @id @default(autoincrement())
-  slug            String          @unique @db.VarChar(120)
-  name            String          @db.VarChar(120)
-  fullName        String?         @map("full_name") @db.VarChar(200)
-  aliases         String[]        @default([])
-  description     String?
-  species         String?         @db.VarChar(80)
-  gender          CharacterGender @default(UNKNOWN)
-  age             Int?            @db.SmallInt
-  occupation      String?         @db.VarChar(200)
-  role            CharacterRole   @default(MINOR)
-  status          CharacterStatus @default(ALIVE)
-  animationStyle  AnimationStyle  @default(TWO_D) @map("animation_style")
-  voiceActors     String[]        @default([]) @map("voice_actors")
-  firstAppearance String?         @map("first_appearance") @db.VarChar(200)
-  colors          String[]        @default([])
-  imageUrl        String          @map("image_url") @db.VarChar(500)
-  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
-  songs           SongCharacter[]
+  id                Int             @id @default(autoincrement())
+  slug              String          @unique @db.VarChar(120)
+  name              String          @db.VarChar(120)
+  fullName          String?         @map("full_name") @db.VarChar(200)
+  aliases           String[]        @default([])
+  description       String?
+  species           String?         @db.VarChar(80)
+  gender            CharacterGender @default(UNKNOWN)
+  age               Int?            @db.SmallInt
+  occupation        String?         @db.VarChar(200)
+  role              CharacterRole   @default(MINOR)
+  status            CharacterStatus @default(ALIVE)
+  animationStyle    AnimationStyle  @default(TWO_D) @map("animation_style")
+  voiceActors       String[]        @default([]) @map("voice_actors")
+  firstAppearanceId Int?            @map("first_appearance_id")
+  firstAppearance   Episode?        @relation("CharacterFirstAppearance", fields: [firstAppearanceId], references: [id], onDelete: SetNull)
+  colors            String[]        @default([])
+  imageUrl          String          @map("image_url") @db.VarChar(500)
+  createdAt         DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  songs             SongCharacter[]
 
   @@index([name])
   @@index([species])
@@ -77,6 +78,7 @@ model Character {
   @@index([role])
   @@index([status])
   @@index([animationStyle])
+  @@index([firstAppearanceId])
   @@map("characters")
 }
 
@@ -99,22 +101,24 @@ enum LocationType {
 }
 
 model Location {
-  id              Int          @id @default(autoincrement())
-  slug            String       @unique @db.VarChar(120)
-  name            String       @db.VarChar(120)
-  description     String?
-  type            LocationType @default(OTHER)
-  parentId        Int?         @map("parent_id")
-  parent          Location?    @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
-  children        Location[]   @relation("LocationHierarchy")
-  firstAppearance String?      @map("first_appearance") @db.VarChar(200)
-  imageUrl        String       @map("image_url") @db.VarChar(500)
-  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt       DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                Int          @id @default(autoincrement())
+  slug              String       @unique @db.VarChar(120)
+  name              String       @db.VarChar(120)
+  description       String?
+  type              LocationType @default(OTHER)
+  parentId          Int?         @map("parent_id")
+  parent            Location?    @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children          Location[]   @relation("LocationHierarchy")
+  firstAppearanceId Int?         @map("first_appearance_id")
+  firstAppearance   Episode?     @relation("LocationFirstAppearance", fields: [firstAppearanceId], references: [id], onDelete: SetNull)
+  imageUrl          String       @map("image_url") @db.VarChar(500)
+  createdAt         DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@index([name])
   @@index([type])
   @@index([parentId])
+  @@index([firstAppearanceId])
   @@map("locations")
 }
 
@@ -163,6 +167,8 @@ model Episode {
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt         DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   songs             Song[]
+  debutCharacters   Character[]   @relation("CharacterFirstAppearance")
+  debutLocations    Location[]    @relation("LocationFirstAppearance")
 
   @@unique([series, season, episodeNumber])
   @@index([title])

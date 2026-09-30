@@ -1,4 +1,4 @@
-import { toCode } from '../episodes/episode.mapper.js';
+import { toEpisodeReference } from '../episodes/episode-reference.js';
 import type { SongResponseDto } from './dto/song-response.dto.js';
 import { songTypeCodec } from './song.enums.js';
 import type { SongWithRelations } from './songs.repository.js';
@@ -18,15 +18,7 @@ export const SongMapper = {
         title: song.title,
         description: song.description,
         type: songTypeCodec.toApi(song.type),
-        episode: song.episode
-            ? {
-                  id: song.episode.id,
-                  slug: song.episode.slug,
-                  title: song.episode.title,
-                  code: toCode(song.episode.season, song.episode.episodeNumber),
-                  url: `/episodes/${song.episode.id}`,
-              }
-            : null,
+        episode: toEpisodeReference(song.episode),
         characters: song.characters.map(({ character }) => ({
             id: character.id,
             slug: character.slug,

@@ -3,10 +3,12 @@ import {
     CharacterGender,
     CharacterRole,
     CharacterStatus,
-    type Character,
 } from '../../src/generated/prisma/client.js';
+import type { CharacterWithRelations } from '../../src/modules/characters/characters.repository.js';
 
-export function buildCharacter(overrides: Partial<Character> = {}): Character {
+export function buildCharacter(
+    overrides: Partial<CharacterWithRelations> = {}
+): CharacterWithRelations {
     return {
         id: 1,
         slug: 'gumball-watterson',
@@ -22,7 +24,8 @@ export function buildCharacter(overrides: Partial<Character> = {}): Character {
         status: CharacterStatus.ALIVE,
         animationStyle: AnimationStyle.TWO_D,
         voiceActors: ['Logan Grove'],
-        firstAppearance: 'The DVD',
+        firstAppearanceId: 1,
+        firstAppearance: { id: 1, slug: 'the-dvd', title: 'The DVD', season: 1, episodeNumber: 1 },
         colors: ['#43c4da'],
         imageUrl: 'https://cdn.example.com/characters/gumball-watterson.webp',
         createdAt: new Date('2026-09-30T00:00:00.000Z'),

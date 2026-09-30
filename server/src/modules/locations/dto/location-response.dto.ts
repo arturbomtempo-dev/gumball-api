@@ -1,3 +1,4 @@
+import type { EpisodeReferenceDto } from '../../episodes/dto/episode-response.dto.js';
 import type { ApiLocationType } from '../location.enums.js';
 
 export class LocationReferenceDto {
@@ -14,7 +15,7 @@ export class LocationResponseDto {
     description: string | null;
     type: ApiLocationType;
     parent: LocationReferenceDto | null;
-    firstAppearance: string | null;
+    firstAppearance: EpisodeReferenceDto | null;
     image: string;
     url: string;
     createdAt: string;

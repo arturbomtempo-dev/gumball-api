@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import type { Prisma } from '../../generated/prisma/client.js';
+import { parseSort } from '../../common/pagination/sort.js';
 import { animationStyleCodec, genderCodec, roleCodec, statusCodec } from './character.enums.js';
 import { CharacterMapper } from './character.mapper.js';
 import { CharactersRepository } from './characters.repository.js';
@@ -19,9 +19,7 @@ export class CharactersService {
     constructor(private readonly repository: CharactersRepository) {}
 
     async list(query: ListCharactersQueryDto): Promise<CharacterPage> {
-        const descending = query.sort.startsWith('-');
-        const sortField = (descending ? query.sort.slice(1) : query.sort) as CharacterSortField;
-        const sortDirection: Prisma.SortOrder = descending ? 'desc' : 'asc';
+        const sort = parseSort<CharacterSortField>(query.sort);
 
         const { items, total } = await this.repository.findMany({
             filters: {
@@ -35,8 +33,8 @@ export class CharactersService {
                 voiceActor: query.voiceActor,
                 ids: query.ids,
             },
-            sortField,
-            sortDirection,
+            sortField: sort.field,
+            sortDirection: sort.direction,
             skip: (query.page - 1) * query.limit,
             take: query.limit,
         });

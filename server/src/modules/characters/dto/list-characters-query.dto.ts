@@ -1,17 +1,9 @@
-import { Transform } from 'class-transformer';
-import {
-    ArrayMaxSize,
-    ArrayNotEmpty,
-    IsIn,
-    IsInt,
-    IsOptional,
-    IsString,
-    Max,
-    MaxLength,
-    Min,
-} from 'class-validator';
+import { IsIn, IsOptional, IsString, MaxLength } from 'class-validator';
 import { PaginationQueryDto } from '../../../common/pagination/pagination-query.dto.js';
+import { buildSortValues } from '../../../common/pagination/sort.js';
 import { Trim } from '../../../common/utils/trim.transform.js';
+import { EnumField } from '../../../common/validation/enum-field.decorator.js';
+import { IdListField } from '../../../common/validation/id-list-field.decorator.js';
 import { CHARACTER_LIMITS } from '../character.constraints.js';
 import {
     animationStyleCodec,
@@ -23,10 +15,9 @@ import {
     type ApiRole,
     type ApiStatus,
 } from '../character.enums.js';
-import { EnumField } from './enum-field.decorator.js';
 
 export const CHARACTER_SORT_FIELDS = ['id', 'name', 'createdAt', 'updatedAt'] as const;
-export const CHARACTER_SORT_VALUES = CHARACTER_SORT_FIELDS.flatMap((field) => [field, `-${field}`]);
+export const CHARACTER_SORT_VALUES = buildSortValues(CHARACTER_SORT_FIELDS);
 
 export type CharacterSortField = (typeof CHARACTER_SORT_FIELDS)[number];
 
@@ -66,20 +57,7 @@ export class ListCharactersQueryDto extends PaginationQueryDto {
     voiceActor?: string;
 
     @IsOptional()
-    @Transform(({ value }: { value: unknown }) =>
-        typeof value === 'string'
-            ? value
-                  .split(',')
-                  .map((item) => item.trim())
-                  .filter(Boolean)
-                  .map(Number)
-            : value
-    )
-    @ArrayNotEmpty()
-    @ArrayMaxSize(CHARACTER_LIMITS.ids)
-    @IsInt({ each: true })
-    @Min(1, { each: true })
-    @Max(2_147_483_647, { each: true })
+    @IdListField(CHARACTER_LIMITS.ids)
     ids?: number[];
 
     @IsOptional()

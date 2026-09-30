@@ -78,3 +78,41 @@ model Character {
   @@index([animationStyle])
   @@map("characters")
 }
+
+enum LocationType {
+  TOWN
+  RESIDENCE
+  SCHOOL
+  SCHOOL_FACILITY
+  SHOP
+  RESTAURANT
+  BUSINESS
+  PUBLIC_SERVICE
+  LEISURE
+  TRANSPORT
+  NATURE
+  OTHER_REALM
+  OTHER
+
+  @@map("location_type")
+}
+
+model Location {
+  id              Int          @id @default(autoincrement())
+  slug            String       @unique @db.VarChar(120)
+  name            String       @db.VarChar(120)
+  description     String?
+  type            LocationType @default(OTHER)
+  parentId        Int?         @map("parent_id")
+  parent          Location?    @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children        Location[]   @relation("LocationHierarchy")
+  firstAppearance String?      @map("first_appearance") @db.VarChar(200)
+  imageUrl        String       @map("image_url") @db.VarChar(500)
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([name])
+  @@index([type])
+  @@index([parentId])
+  @@map("locations")
+}

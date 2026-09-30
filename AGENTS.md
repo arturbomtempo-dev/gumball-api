@@ -30,7 +30,7 @@ A public, **read-only** REST API about *The Amazing World of Gumball*, meant to 
 - Read configuration through `AppConfigService`, never through `process.env` in application code. Every new env var must be added to `src/config/env.schema.ts` (zod) and to `.env.example`.
 - Only `GET` routes. The API never creates, updates or deletes data over HTTP, and there is no authentication. Like PokéAPI or the Rick and Morty API, data is maintained outside the API: the maintainer edits it directly in Supabase.
 - List endpoints are paginated with `PaginationQueryDto` and `paginate()` from `src/common/pagination/`, and every filter is validated in a query DTO. Route params go through `ParseIdPipe` / `ParseSlugPipe`.
-- Enums are stored uppercase in the database and exposed in lowercase kebab-case through an enum codec (see `modules/characters/character.enums.ts`).
+- Enums are stored uppercase in the database and exposed in lowercase kebab-case through `createEnumCodec` (`src/common/utils/enum-codec.ts`). Reuse the shared query helpers in `src/common/` (`EnumField`, `IdField`, `IdListField`, `buildSortValues`/`parseSort`, cache-control constants) instead of redefining them per module.
 - Errors go through `AllExceptionsFilter`, which produces one consistent shape: `statusCode`, `error`, `message`, `path`, `timestamp`.
 - Formatting: Prettier (single quotes, trailing commas). Linting: oxlint.
 
@@ -83,4 +83,4 @@ Before reporting a task as done, run `format:check`, `lint`, `typecheck`, `test`
 
 - Supabase setup guide (pt-BR): `server/docs/supabase-setup.pt-BR.md`
 - Security baseline migration: `server/prisma/migrations/20260929000000_database_security/migration.sql`
-- Reference feature module: `server/src/modules/characters/`
+- Reference feature modules: `server/src/modules/characters/` and `server/src/modules/locations/` (self-referencing `parent` hierarchy)

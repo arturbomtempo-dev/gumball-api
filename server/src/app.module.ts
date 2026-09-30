@@ -9,6 +9,7 @@ import { AppConfigService } from './config/app-config.service.js';
 import { DatabaseModule } from './database/database.module.js';
 import { CharactersModule } from './modules/characters/characters.module.js';
 import { HealthModule } from './modules/health/health.module.js';
+import { LocationsModule } from './modules/locations/locations.module.js';
 
 @Module({
     imports: [
@@ -31,6 +32,7 @@ import { HealthModule } from './modules/health/health.module.js';
         DatabaseModule,
         HealthModule,
         CharactersModule,
+        LocationsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: ThrottlerGuard },

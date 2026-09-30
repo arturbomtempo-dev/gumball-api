@@ -7,6 +7,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter.js';
 import { AppConfigModule } from './config/app-config.module.js';
 import { AppConfigService } from './config/app-config.service.js';
 import { DatabaseModule } from './database/database.module.js';
+import { CharactersModule } from './modules/characters/characters.module.js';
 import { HealthModule } from './modules/health/health.module.js';
 
 @Module({
@@ -29,6 +30,7 @@ import { HealthModule } from './modules/health/health.module.js';
         }),
         DatabaseModule,
         HealthModule,
+        CharactersModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: ThrottlerGuard },

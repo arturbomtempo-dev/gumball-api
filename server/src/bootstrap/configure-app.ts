@@ -1,8 +1,7 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import compression from 'compression';
 import helmet from 'helmet';
-import { API_VERSION } from '../app.constants.js';
 import { AppConfigService } from '../config/app-config.service.js';
 
 export function configureApp(app: NestExpressApplication): void {
@@ -18,11 +17,6 @@ export function configureApp(app: NestExpressApplication): void {
         origin: config.corsOrigins,
         methods: ['GET', 'HEAD', 'OPTIONS'],
         maxAge: 86_400,
-    });
-
-    app.enableVersioning({
-        type: VersioningType.URI,
-        defaultVersion: API_VERSION,
     });
 
     app.useGlobalPipes(

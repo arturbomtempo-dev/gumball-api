@@ -51,12 +51,12 @@ describe('Gumball API (e2e)', () => {
     });
 
     it('returns a consistent error body for unknown routes', async () => {
-        const response = await request(app.getHttpServer()).get('/v1/unknown').expect(404);
+        const response = await request(app.getHttpServer()).get('/unknown').expect(404);
 
         expect(response.body).toMatchObject({
             statusCode: 404,
             error: 'Not Found',
-            path: '/v1/unknown',
+            path: '/unknown',
         });
     });
 

@@ -1,10 +1,10 @@
-import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 import { SkipThrottle } from '@nestjs/throttler';
 import { DatabaseHealthIndicator } from './database.health.js';
 
 @SkipThrottle()
-@Controller({ path: 'health', version: VERSION_NEUTRAL })
+@Controller('health')
 export class HealthController {
     constructor(
         private readonly health: HealthCheckService,

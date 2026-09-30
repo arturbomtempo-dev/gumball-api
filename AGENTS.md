@@ -28,7 +28,9 @@ A public, **read-only** REST API about *The Amazing World of Gumball*, meant to 
   - Cross-cutting code goes in `server/src/common/`, configuration in `server/src/config/`, and database access in `server/src/database/`.
 - The project is **ESM** (`"type": "module"`, `nodenext`): relative imports must end in `.js`.
 - Read configuration through `AppConfigService`, never through `process.env` in application code. Every new env var must be added to `src/config/env.schema.ts` (zod) and to `.env.example`.
-- Only `GET` routes. The API never creates, updates or deletes data over HTTP.
+- Only `GET` routes. The API never creates, updates or deletes data over HTTP, and there is no authentication. Like PokéAPI or the Rick and Morty API, data is maintained outside the API: the maintainer edits it directly in Supabase.
+- List endpoints are paginated with `PaginationQueryDto` and `paginate()` from `src/common/pagination/`, and every filter is validated in a query DTO. Route params go through `ParseIdPipe` / `ParseSlugPipe`.
+- Enums are stored uppercase in the database and exposed in lowercase kebab-case through an enum codec (see `modules/characters/character.enums.ts`).
 - Errors go through `AllExceptionsFilter`, which produces one consistent shape: `statusCode`, `error`, `message`, `path`, `timestamp`.
 - Formatting: Prettier (single quotes, trailing commas). Linting: oxlint.
 
@@ -46,6 +48,7 @@ Security is non-negotiable: API consumers must only be able to **read**.
   ```
 
   This grants `SELECT` to `anon`, `authenticated` and `gumball_api_reader`, enables RLS and creates a single `FOR SELECT` policy. Never add `INSERT`, `UPDATE` or `DELETE` policies or grants for these roles.
+- Because data is edited by hand in Supabase, the database must protect itself: give `updated_at` a default plus the `internal.set_updated_at()` trigger, and add `CHECK` constraints for formats Prisma cannot enforce (slugs, `https` URLs, non-null arrays).
 - Create migrations with `npm run db:migrate:dev -- --create-only --name <name>`, edit them (add the policy line, strip comments), then apply them with `npm run db:migrate:deploy`.
 - After any database change, run `npm run db:verify-security`. It must report `0 failed`.
 - Never use or store the Supabase `service_role`/secret key or the publishable key. The API does not need them.
@@ -80,3 +83,4 @@ Before reporting a task as done, run `format:check`, `lint`, `typecheck`, `test`
 
 - Supabase setup guide (pt-BR): `server/docs/supabase-setup.pt-BR.md`
 - Security baseline migration: `server/prisma/migrations/20260929000000_database_security/migration.sql`
+- Reference feature module: `server/src/modules/characters/`

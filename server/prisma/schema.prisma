@@ -10,3 +10,71 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum CharacterGender {
+  MALE
+  FEMALE
+  OTHER
+  UNKNOWN
+
+  @@map("character_gender")
+}
+
+enum CharacterRole {
+  MAIN
+  SUPPORTING
+  MINOR
+
+  @@map("character_role")
+}
+
+enum CharacterStatus {
+  ALIVE
+  DECEASED
+  UNDEAD
+  UNKNOWN
+
+  @@map("character_status")
+}
+
+enum AnimationStyle {
+  TWO_D
+  CGI
+  STOP_MOTION
+  PUPPET
+  LIVE_ACTION
+  MIXED_MEDIA
+  OTHER
+
+  @@map("animation_style")
+}
+
+model Character {
+  id              Int             @id @default(autoincrement())
+  slug            String          @unique @db.VarChar(120)
+  name            String          @db.VarChar(120)
+  fullName        String?         @map("full_name") @db.VarChar(200)
+  aliases         String[]        @default([])
+  description     String?
+  species         String?         @db.VarChar(80)
+  gender          CharacterGender @default(UNKNOWN)
+  age             Int?            @db.SmallInt
+  occupation      String?         @db.VarChar(200)
+  role            CharacterRole   @default(MINOR)
+  status          CharacterStatus @default(ALIVE)
+  animationStyle  AnimationStyle  @default(TWO_D) @map("animation_style")
+  voiceActors     String[]        @default([]) @map("voice_actors")
+  firstAppearance String?         @map("first_appearance") @db.VarChar(200)
+  colors          String[]        @default([])
+  imageUrl        String          @map("image_url") @db.VarChar(500)
+  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([name])
+  @@index([species])
+  @@index([gender])
+  @@index([role])
+  @@index([status])
+  @@index([animationStyle])
+  @@map("characters")
+}

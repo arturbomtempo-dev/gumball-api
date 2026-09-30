@@ -253,3 +253,40 @@ model SongCharacter {
   @@index([characterId])
   @@map("song_characters")
 }
+
+enum GamePlatform {
+  WEB
+  MOBILE
+  ROBLOX
+  VOICE_ASSISTANT
+
+  @@map("game_platform")
+}
+
+enum GameStatus {
+  AVAILABLE
+  DISCONTINUED
+  UNKNOWN
+
+  @@map("game_status")
+}
+
+model Game {
+  id          Int            @id @default(autoincrement())
+  slug        String         @unique @db.VarChar(160)
+  title       String         @db.VarChar(200)
+  description String?
+  platforms   GamePlatform[] @default([])
+  status      GameStatus     @default(UNKNOWN)
+  releaseDate DateTime?      @map("release_date") @db.Date
+  releaseYear Int?           @map("release_year") @db.SmallInt
+  developers  String[]       @default([])
+  imageUrl    String         @map("image_url") @db.VarChar(500)
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([title])
+  @@index([status])
+  @@index([releaseYear])
+  @@map("games")
+}

@@ -13,7 +13,7 @@ const episodeUrl = (id: number) => `/episodes/${id}`;
 
 const pad = (value: number) => String(value).padStart(2, '0');
 
-function toCode(season: number | null, episodeNumber: number | null): string | null {
+export function toCode(season: number | null, episodeNumber: number | null): string | null {
     return season !== null && episodeNumber !== null
         ? `S${pad(season)}E${pad(episodeNumber)}`
         : null;

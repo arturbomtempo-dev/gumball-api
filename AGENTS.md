@@ -83,4 +83,4 @@ Before reporting a task as done, run `format:check`, `lint`, `typecheck`, `test`
 
 - Supabase setup guide (pt-BR): `server/docs/supabase-setup.pt-BR.md`
 - Security baseline migration: `server/prisma/migrations/20260929000000_database_security/migration.sql`
-- Reference feature modules: `server/src/modules/characters/`, `server/src/modules/locations/` (self-referencing `parent` hierarchy) `server/src/modules/episodes/` (computed `previous`/`next` from `overallNumber`, date-range filters via `DateField`) and `server/src/modules/seasons/` (aggregated counts from another table via `groupBy`)
+- Reference feature modules: `server/src/modules/characters/`, `server/src/modules/locations/` (self-referencing `parent` hierarchy) `server/src/modules/episodes/` (computed `previous`/`next` from `overallNumber`, date-range filters via `DateField`) `server/src/modules/seasons/` (aggregated counts from another table via `groupBy`) and `server/src/modules/songs/` (foreign key to `episodes` and a many-to-many join table to `characters`; join tables also get `apply_public_read_policy`)

@@ -69,6 +69,7 @@ model Character {
   imageUrl        String          @map("image_url") @db.VarChar(500)
   createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  songs           SongCharacter[]
 
   @@index([name])
   @@index([species])
@@ -161,6 +162,7 @@ model Episode {
   imageUrl          String        @map("image_url") @db.VarChar(500)
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt         DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  songs             Song[]
 
   @@unique([series, season, episodeNumber])
   @@index([title])
@@ -201,4 +203,47 @@ model Season {
   @@unique([series, seriesSeasonNumber])
   @@index([status])
   @@map("seasons")
+}
+
+enum SongType {
+  EPISODE
+  THEME
+  PROMO
+  WEB
+
+  @@map("song_type")
+}
+
+model Song {
+  id              Int             @id @default(autoincrement())
+  slug            String          @unique @db.VarChar(160)
+  title           String          @db.VarChar(200)
+  description     String?
+  type            SongType        @default(EPISODE)
+  episodeId       Int?            @map("episode_id")
+  episode         Episode?        @relation(fields: [episodeId], references: [id], onDelete: SetNull)
+  characters      SongCharacter[]
+  vocalists       String[]        @default([])
+  genres          String[]        @default([])
+  durationSeconds Int?            @map("duration_seconds") @db.SmallInt
+  musicalKey      String?         @map("musical_key") @db.VarChar(120)
+  imageUrl        String?         @map("image_url") @db.VarChar(500)
+  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([title])
+  @@index([type])
+  @@index([episodeId])
+  @@map("songs")
+}
+
+model SongCharacter {
+  songId      Int       @map("song_id")
+  characterId Int       @map("character_id")
+  song        Song      @relation(fields: [songId], references: [id], onDelete: Cascade)
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@id([songId, characterId])
+  @@index([characterId])
+  @@map("song_characters")
 }

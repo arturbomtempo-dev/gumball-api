@@ -12,6 +12,7 @@ import { EpisodesModule } from './modules/episodes/episodes.module.js';
 import { HealthModule } from './modules/health/health.module.js';
 import { LocationsModule } from './modules/locations/locations.module.js';
 import { SeasonsModule } from './modules/seasons/seasons.module.js';
+import { SongsModule } from './modules/songs/songs.module.js';
 
 @Module({
     imports: [
@@ -37,6 +38,7 @@ import { SeasonsModule } from './modules/seasons/seasons.module.js';
         LocationsModule,
         EpisodesModule,
         SeasonsModule,
+        SongsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: ThrottlerGuard },

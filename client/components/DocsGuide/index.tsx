@@ -62,7 +62,12 @@ export function DocsGuide({ docs, paginationExample }: DocsGuideProps) {
                 <Paragraph>{docs.baseUrl}</Paragraph>
                 <BaseUrl label={docs.baseUrlLabel} />
                 <Endpoint path="/" />
-                <CodeBlock code={formatJson(ROOT_EXAMPLE)} title="GET /" language="json" />
+                <CodeBlock
+                    code={formatJson(ROOT_EXAMPLE)}
+                    title={docs.exampleResponse}
+                    titleStyle="label"
+                    language="json"
+                />
                 <TryIt path="/" />
                 <ul className="grid gap-2 sm:grid-cols-2">
                     {RESOURCES.map((resource) => (

@@ -302,6 +302,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                 <CodeBlock
                                     code={result.body}
                                     title={ui.tryIt.response}
+                                    titleStyle="label"
                                     language={result.isJson ? 'json' : 'text'}
                                     scrollable
                                 />

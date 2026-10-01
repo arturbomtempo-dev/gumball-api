@@ -4,16 +4,25 @@ import { JsonCode } from '@/components/JsonCode';
 interface CodeBlockProps {
     code: string;
     title?: string;
+    titleStyle?: 'code' | 'label';
     language?: 'json' | 'text';
     scrollable?: boolean;
 }
 
-export function CodeBlock({ code, title, language = 'text', scrollable = false }: CodeBlockProps) {
+export function CodeBlock({
+    code,
+    title,
+    titleStyle = 'code',
+    language = 'text',
+    scrollable = false,
+}: CodeBlockProps) {
     return (
         <figure className="group relative overflow-hidden rounded-xl border border-border bg-code-background">
             {title ? (
                 <figcaption className="flex h-10 items-center justify-between border-b border-border pr-1 pl-4 text-xs text-subtle">
-                    <span className="font-mono">{title}</span>
+                    <span className={titleStyle === 'code' ? 'font-mono' : 'font-medium'}>
+                        {title}
+                    </span>
                     <CopyButton value={code} labelKey="code" />
                 </figcaption>
             ) : (

@@ -134,6 +134,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
                             <CodeBlock
                                 code={response}
                                 title={home.quickStart.response}
+                                titleStyle="label"
                                 language="json"
                             />
                         </div>

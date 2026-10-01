@@ -230,6 +230,7 @@ export const en = {
             meaning: 'Meaning',
         },
         baseUrlLabel: 'Base URL',
+        exampleResponse: 'Example response',
         introduction: [
             'The Gumball API is a free, read-only REST API with data about The Amazing World of Gumball and The Wonderfully Weird World of Gumball. It serves characters, locations, episodes, seasons, songs, games and in-universe media as JSON.',
             'There is no authentication, no API key and no sign-up. Every route is a `GET` request, so you can call it from a browser, a server or the terminal. Open any `Try it` panel on this page to send a real request and see the response.',

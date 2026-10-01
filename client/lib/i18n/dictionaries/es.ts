@@ -232,6 +232,7 @@ export const es = {
             meaning: 'Significado',
         },
         baseUrlLabel: 'URL base',
+        exampleResponse: 'Ejemplo de respuesta',
         introduction: [
             'La Gumball API es una API REST gratuita y de solo lectura con datos sobre El Increíble Mundo de Gumball y The Wonderfully Weird World of Gumball. Ofrece personajes, lugares, episodios, temporadas, canciones, juegos y medios del universo de la serie en formato JSON.',
             'No hay autenticación, clave de API ni registro. Todas las rutas son solicitudes `GET`, así que puedes llamarlas desde el navegador, un servidor o la terminal. Abre cualquier panel `Probar` de esta página para enviar una solicitud real y ver la respuesta.',

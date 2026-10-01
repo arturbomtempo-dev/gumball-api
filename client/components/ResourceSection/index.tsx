@@ -104,7 +104,8 @@ export function ResourceSection({ locale, resource, docs, example, total }: Reso
                 {example ? (
                     <CodeBlock
                         code={formatJson(example)}
-                        title={`GET ${resource.path}/${resource.exampleId}`}
+                        title={docs.exampleResponse}
+                        titleStyle="label"
                         language="json"
                         scrollable
                     />

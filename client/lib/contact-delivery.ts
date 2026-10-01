@@ -3,16 +3,12 @@ import { LOCALE_DETAILS, type Locale } from './i18n/config';
 import { getDictionary } from './i18n/dictionaries';
 import { AUTHOR, SITE_NAME, SITE_URL } from './site';
 
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax';
+const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${encodeURIComponent(AUTHOR.email)}`;
 const TIMEOUT_MS = 10_000;
 
 interface FormSubmitResponse {
     success?: boolean | string;
     message?: string;
-}
-
-function recipient(): string {
-    return encodeURIComponent(process.env.FORMSUBMIT_ENDPOINT?.trim() || AUTHOR.email);
 }
 
 export async function deliverContactMessage(
@@ -23,7 +19,7 @@ export async function deliverContactMessage(
     const subject = subjects[values.subject as ContactSubject] ?? values.subject;
 
     try {
-        const response = await fetch(`${FORMSUBMIT_URL}/${recipient()}`, {
+        const response = await fetch(FORMSUBMIT_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

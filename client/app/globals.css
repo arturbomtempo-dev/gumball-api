@@ -1,0 +1,87 @@
+@import 'tailwindcss';
+
+:root {
+    --background: #ffffff;
+    --surface: #fafaf9;
+    --surface-strong: #f4f4f2;
+    --border: #e7e6e3;
+    --border-strong: #d6d4cf;
+    --foreground: #18181b;
+    --muted: #57575f;
+    --subtle: #8a8a93;
+    --brand: #0b86c9;
+    --brand-strong: #0a6da3;
+    --brand-soft: #e8f6fe;
+    --code-background: #fbfbfa;
+    --code-key: #0a6da3;
+    --code-string: #15803d;
+    --code-number: #c2410c;
+    --code-literal: #7c3aed;
+    --code-punctuation: #8a8a93;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-surface: var(--surface);
+    --color-surface-strong: var(--surface-strong);
+    --color-border: var(--border);
+    --color-border-strong: var(--border-strong);
+    --color-foreground: var(--foreground);
+    --color-muted: var(--muted);
+    --color-subtle: var(--subtle);
+    --color-brand: var(--brand);
+    --color-brand-strong: var(--brand-strong);
+    --color-brand-soft: var(--brand-soft);
+    --color-code-background: var(--code-background);
+    --color-code-key: var(--code-key);
+    --color-code-string: var(--code-string);
+    --color-code-number: var(--code-number);
+    --color-code-literal: var(--code-literal);
+    --color-code-punctuation: var(--code-punctuation);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7.5rem;
+}
+
+@media (min-width: 64rem) {
+    html {
+        scroll-padding-top: 5.5rem;
+    }
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+}
+
+button:not(:disabled),
+[role='button']:not(:disabled),
+[role='tab'],
+select:not(:disabled),
+summary,
+label[for] {
+    cursor: pointer;
+}
+
+:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

@@ -1,5 +1,6 @@
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
                 >
                     Skip to content
                 </a>
+                <ScrollToTop />
                 <Header />
                 <main id="content" className="flex-1">
                     {children}

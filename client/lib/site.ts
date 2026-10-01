@@ -15,8 +15,14 @@ export const SITE_DESCRIPTION =
 
 export const AUTHOR = {
     name: 'Artur Bomtempo',
+    email: 'arturbcolen@gmail.com',
     github: 'https://github.com/arturbomtempo-dev',
+    linkedin: 'https://www.linkedin.com/in/artur-bomtempo/',
+    instagram: 'https://www.instagram.com/arturbomtempo.dev',
+    sponsors: 'https://github.com/sponsors/arturbomtempo-dev',
 };
+
+export const REPOSITORY_URL = 'https://github.com/arturbomtempo-dev/gumball-api';
 
 export const NAVIGATION = [
     { href: '/', label: 'Home' },

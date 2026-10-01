@@ -11,10 +11,10 @@ interface ContactCardProps {
 }
 
 const CARD_CLASSES =
-    'group flex flex-col gap-4 rounded-2xl border border-border p-6 transition-colors hover:border-border-strong hover:bg-surface';
+    'group flex w-full flex-col gap-4 rounded-2xl border border-border p-6 transition-colors hover:border-border-strong hover:bg-surface';
 
 export function ContactCard({ href, icon, title, description, label }: ContactCardProps) {
-    const external = href.startsWith('http');
+    const external = !href.startsWith('/');
     const content = (
         <>
             <div className="flex items-center justify-between">

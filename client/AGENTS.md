@@ -35,6 +35,8 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 - The documentation follows the structure of the Rick and Morty API docs: a sidebar per section, the base URL, schema tables for every resource and examples for every route.
 - Every endpoint has a `Try it` panel that sends a real request to the API from the browser.
 - `public/logo.png` is the only logo file, with a transparent background. Never add copies of it: the favicon (`app/icon.tsx`), the Apple touch icon (`app/apple-icon.tsx`) and the social preview (`app/opengraph-image.tsx`) are generated from it at build time.
+- External links (including `mailto:`) open in a new tab with `target="_blank"` and `rel="noreferrer"`. Personal links, the repository and GitHub Sponsors live in `lib/site.ts`.
+- `components/ScrollToTop` smoothly scrolls to the top when the route changes, except for hash links and browser back or forward navigation.
 - Every clickable element shows a pointer cursor. Buttons, selects and other controls get it from `app/globals.css`; keep `cursor-pointer` on any new custom clickable element.
 
 ## Documentation content

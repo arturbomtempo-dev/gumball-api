@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Container } from '@/components/Container';
-import { AUTHOR, NAVIGATION, SITE_NAME } from '@/lib/site';
+import { AUTHOR, NAVIGATION, REPOSITORY_URL, SITE_NAME } from '@/lib/site';
 
 export function Footer() {
     return (
@@ -25,7 +25,7 @@ export function Footer() {
                             </Link>
                         ))}
                         <a
-                            href={AUTHOR.github}
+                            href={REPOSITORY_URL}
                             target="_blank"
                             rel="noreferrer"
                             className="transition-colors hover:text-foreground"

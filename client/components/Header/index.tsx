@@ -2,7 +2,7 @@ import { Container } from '@/components/Container';
 import { GithubIcon } from '@/components/Icons';
 import { Logo } from '@/components/Logo';
 import { NavLink } from '@/components/NavLink';
-import { AUTHOR, NAVIGATION } from '@/lib/site';
+import { NAVIGATION, REPOSITORY_URL } from '@/lib/site';
 
 export function Header() {
     return (
@@ -14,10 +14,10 @@ export function Header() {
                         <NavLink key={item.href} href={item.href} label={item.label} />
                     ))}
                     <a
-                        href={AUTHOR.github}
+                        href={REPOSITORY_URL}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label="GitHub"
+                        aria-label="Source code on GitHub"
                         className="ml-1 hidden rounded-md p-2 text-muted transition-colors hover:text-foreground sm:block"
                     >
                         <GithubIcon width={18} height={18} />

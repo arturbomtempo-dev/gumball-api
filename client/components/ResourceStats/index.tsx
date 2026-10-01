@@ -18,11 +18,11 @@ export function ResourceStats({ locale, counts, resources }: ResourceStatsProps)
                         href={`${localizePath(locale, '/docs')}#${count.key}`}
                         className="flex h-full flex-col gap-1 px-5 py-5 transition-colors hover:bg-surface"
                     >
-                        <span className="text-2xl font-semibold tracking-tight text-foreground tabular-nums">
-                            {count.total !== null
-                                ? count.total.toLocaleString(LOCALE_DETAILS[locale].intl)
-                                : '—'}
-                        </span>
+                        {count.total !== null ? (
+                            <span className="text-2xl font-semibold tracking-tight text-foreground tabular-nums">
+                                {count.total.toLocaleString(LOCALE_DETAILS[locale].intl)}
+                            </span>
+                        ) : null}
                         <span className="text-sm text-muted">{resources[count.key].title}</span>
                     </Link>
                 </li>

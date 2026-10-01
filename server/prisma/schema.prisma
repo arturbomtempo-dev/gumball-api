@@ -169,6 +169,7 @@ model Episode {
   songs             Song[]
   debutCharacters   Character[]   @relation("CharacterFirstAppearance")
   debutLocations    Location[]    @relation("LocationFirstAppearance")
+  debutMedia        Media[]       @relation("MediaFirstAppearance")
 
   @@unique([series, season, episodeNumber])
   @@index([title])
@@ -288,4 +289,35 @@ model Game {
   @@index([status])
   @@index([releaseYear])
   @@map("games")
+}
+
+enum MediaType {
+  TV_SHOW
+  MOVIE
+  COMIC
+  BOOK
+  APP
+  VIDEO_GAME
+  VIDEO
+
+  @@map("media_type")
+}
+
+model Media {
+  id                Int       @id @default(autoincrement())
+  slug              String    @unique @db.VarChar(160)
+  title             String    @db.VarChar(200)
+  description       String?
+  type              MediaType
+  parodyOf          String?   @map("parody_of") @db.VarChar(200)
+  firstAppearanceId Int?      @map("first_appearance_id")
+  firstAppearance   Episode?  @relation("MediaFirstAppearance", fields: [firstAppearanceId], references: [id], onDelete: SetNull)
+  imageUrl          String    @map("image_url") @db.VarChar(500)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([title])
+  @@index([type])
+  @@index([firstAppearanceId])
+  @@map("media")
 }

@@ -92,3 +92,4 @@ Before reporting a task as done, run `format:check`, `lint`, `typecheck`, `test`
   - `server/src/modules/seasons/`: aggregated counts from another table via `groupBy`.
   - `server/src/modules/songs/`: foreign key to `episodes` and a many-to-many join table to `characters`; join tables also get `apply_public_read_policy`.
   - `server/src/modules/games/`: enum array column (`platforms`) filtered with `has`.
+  - `server/src/modules/media/`: in-universe shows, movies, comics, apps and videos; `firstAppearance` episode reference and a `parodyOf` field filled only when the wiki states the parody.

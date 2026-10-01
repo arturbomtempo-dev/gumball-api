@@ -6,7 +6,7 @@ import { SITE_NAME } from '@/lib/site';
 export function Logo() {
     return (
         <Link href="/" className="flex items-center gap-2.5" aria-label={`${SITE_NAME} home`}>
-            <Image src={logo} alt="" width={36} height={34} priority />
+            <Image src={logo} alt="" sizes="36px" priority className="h-auto w-9" />
             <span className="text-[15px] font-semibold tracking-tight text-foreground">
                 {SITE_NAME}
             </span>

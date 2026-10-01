@@ -196,3 +196,31 @@ export function InstagramIcon(props: IconProps) {
         </BaseIcon>
     );
 }
+
+export function CheckCircleIcon(props: IconProps) {
+    return (
+        <BaseIcon {...props}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="m8.5 12.5 2.5 2.5 4.5-5" />
+        </BaseIcon>
+    );
+}
+
+export function AlertCircleIcon(props: IconProps) {
+    return (
+        <BaseIcon {...props}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8v4.5" />
+            <path d="M12 16h.01" />
+        </BaseIcon>
+    );
+}
+
+export function CloseIcon(props: IconProps) {
+    return (
+        <BaseIcon {...props}>
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+        </BaseIcon>
+    );
+}

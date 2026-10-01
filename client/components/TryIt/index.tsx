@@ -218,7 +218,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                                 onChange={(event) =>
                                                     update(parameter.name, event.target.value)
                                                 }
-                                                className="h-9 w-full rounded-lg border border-border-strong bg-background px-2.5 font-mono text-[13px] text-foreground outline-none focus:border-brand"
+                                                className="h-9 w-full rounded-lg border border-border-strong bg-background px-2.5 font-mono text-[13px] text-foreground outline-none focus:border-brand focus:ring-3 focus:ring-brand/15"
                                             >
                                                 <option value="">Any</option>
                                                 {parameter.values.map((value) => (
@@ -238,7 +238,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                                 onChange={(event) =>
                                                     update(parameter.name, event.target.value)
                                                 }
-                                                className="h-9 w-full rounded-lg border border-border-strong bg-background px-2.5 font-mono text-[13px] text-foreground outline-none placeholder:text-subtle/70 focus:border-brand"
+                                                className="h-9 w-full rounded-lg border border-border-strong bg-background px-2.5 font-mono text-[13px] text-foreground outline-none placeholder:text-subtle/70 focus:border-brand focus:ring-3 focus:ring-brand/15"
                                             />
                                         )}
                                     </div>

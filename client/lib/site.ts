@@ -14,6 +14,7 @@ export const SITE_NAME = 'Gumball API';
 
 export const AUTHOR = {
     name: 'Artur Bomtempo',
+    fullName: 'Artur Bomtempo Colen',
     email: 'arturbcolen@gmail.com',
     github: 'https://github.com/arturbomtempo-dev',
     linkedin: 'https://www.linkedin.com/in/artur-bomtempo/',

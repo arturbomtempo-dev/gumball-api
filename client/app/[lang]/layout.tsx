@@ -6,7 +6,7 @@ import { Toaster } from '@/components/Toaster';
 import { LOCALES, LOCALE_DETAILS, isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { pageMetadata } from '@/lib/i18n/metadata';
-import { SITE_NAME, SITE_URL } from '@/lib/site';
+import { AUTHOR, SITE_NAME, SITE_URL } from '@/lib/site';
 import { THEME_SCRIPT } from '@/lib/theme';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -45,6 +45,8 @@ export async function generateMetadata({ params }: LayoutProps<'/[lang]'>): Prom
             template: `%s · ${SITE_NAME}`,
         },
         applicationName: SITE_NAME,
+        authors: [{ name: AUTHOR.fullName, url: AUTHOR.github }],
+        creator: AUTHOR.fullName,
         keywords: ['Gumball', 'The Amazing World of Gumball', 'REST API', 'API', 'Cartoon Network'],
         openGraph: {
             ...localized.openGraph,

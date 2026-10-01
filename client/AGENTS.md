@@ -36,7 +36,8 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 - Every endpoint has a `Try it` panel that sends a real request to the API from the browser.
 - `public/logo.png` is the only logo file, with a transparent background. Never add copies of it: the favicon (`app/icon.tsx`), the Apple touch icon (`app/apple-icon.tsx`) and the social preview (`app/opengraph-image.tsx`) are generated from it at build time.
 - External links (including `mailto:`) open in a new tab with `target="_blank"` and `rel="noreferrer"`. Personal links, the repository and GitHub Sponsors live in `lib/site.ts`.
-- `components/ScrollToTop` smoothly scrolls to the top when the route changes, except for hash links and browser back or forward navigation.
+- `components/ScrollToTop` smoothly scrolls to the top when the route changes, except for hash links and browser back or forward navigation. Do not add `data-scroll-behavior="smooth"` to `<html>`: it makes Next.js jump to the top instantly and removes the smooth transition. The related dev-only console hint is expected.
+- Below the `sm` breakpoint, the header shows `components/MobileMenu`, a hamburger menu rendered through a portal because the header's `backdrop-blur` would trap fixed-position children.
 - The contact form submits to the `sendContactMessage` Server Action in `app/contact/actions.ts`. Validation lives in `lib/contact.ts` and runs on the server. Message delivery is not implemented yet: until it is, a valid submission returns an error asking the visitor to email the maintainer.
 - Use toasts for feedback messages: call `toast.success()` or `toast.error()` from `lib/toast.ts`; `components/Toaster` is rendered once in the root layout. Field-level validation errors stay inline under each field.
 - Every clickable element shows a pointer cursor. Buttons, selects and other controls get it from `app/globals.css`; keep `cursor-pointer` on any new custom clickable element.

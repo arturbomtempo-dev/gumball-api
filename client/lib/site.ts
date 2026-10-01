@@ -29,3 +29,7 @@ export const NAVIGATION = [
     { href: '/docs', label: 'Docs' },
     { href: '/contact', label: 'Contact' },
 ] as const;
+
+export function isActivePath(pathname: string, href: string): boolean {
+    return href === '/' ? pathname === '/' : pathname.startsWith(href);
+}

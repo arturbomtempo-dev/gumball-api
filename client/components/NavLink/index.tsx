@@ -1,5 +1,6 @@
 'use client';
 
+import { isActivePath } from '@/lib/site';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -10,7 +11,7 @@ interface NavLinkProps {
 
 export function NavLink({ href, label }: NavLinkProps) {
     const pathname = usePathname();
-    const active = href === '/' ? pathname === '/' : pathname.startsWith(href);
+    const active = isActivePath(pathname, href);
 
     return (
         <Link

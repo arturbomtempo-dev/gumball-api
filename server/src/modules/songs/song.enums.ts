@@ -4,7 +4,6 @@ import { SongType } from '../../generated/prisma/client.js';
 export const songTypeCodec = createEnumCodec({
     [SongType.EPISODE]: 'episode',
     [SongType.THEME]: 'theme',
-    [SongType.PROMO]: 'promo',
     [SongType.WEB]: 'web',
 });
 

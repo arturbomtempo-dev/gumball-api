@@ -40,7 +40,7 @@ describe('SongMapper', () => {
     it('handles songs outside episodes without duration or image', () => {
         const response = SongMapper.toResponse(
             buildSong({
-                type: SongType.PROMO,
+                type: SongType.WEB,
                 episodeId: null,
                 episode: null,
                 characters: [],
@@ -50,7 +50,7 @@ describe('SongMapper', () => {
         );
 
         expect(response).toMatchObject({
-            type: 'promo',
+            type: 'web',
             episode: null,
             characters: [],
             duration: null,

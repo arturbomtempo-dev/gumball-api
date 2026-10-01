@@ -214,7 +214,6 @@ model Season {
 enum SongType {
   EPISODE
   THEME
-  PROMO
   WEB
 
   @@map("song_type")

@@ -15,8 +15,23 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 ## Stack
 
 - Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS 4.
-- Pages are statically rendered and revalidate API data every hour through `lib/api.ts`.
+- Every page is statically generated for each locale. Home and docs revalidate API data every hour through `lib/api.ts`.
 - The API base URL comes from `NEXT_PUBLIC_API_URL` and defaults to the production API.
+
+## Internationalization
+
+- Supported locales are English (`en`, default), Brazilian Portuguese (`pt-br`) and Spanish (`es`), configured in `lib/i18n/config.ts`.
+- English has no prefix (`/`, `/docs`, `/contact`); the other locales do (`/pt-br/docs`, `/es/docs`). Every page lives under `app/[lang]` and is statically generated for each locale.
+- `proxy.ts` rewrites unprefixed paths to `/en/...` internally, redirects `/en/...` permanently to the unprefixed URL, and sends visitors who chose another language (the `NEXT_LOCALE` cookie) to their prefixed URL.
+- `components/LanguageSwitcher` uses plain `<a>` elements: it saves the cookie and loads the new document, keeping the current `#hash`. Never switch languages with `next/link` or a client-side navigation: re-rendering the root layout in the browser breaks the inline theme `<script>` and the prefetch of rewritten routes.
+- Build every internal link with `localizePath(locale, path)` and compare routes with `splitLocale(pathname)`.
+- All UI text lives in typed dictionaries in `lib/i18n/dictionaries`. `en.ts` defines the `Dictionary` type and the other locales use `satisfies Dictionary`, so a missing or extra key fails the build. Never hard-code user-facing text in components.
+- Write every translation natively, not word for word: Brazilian Portuguese and neutral Spanish. Keep established technical terms (id, slug, endpoint, query parameters, enum values, field names, HTTP status texts) untranslated.
+- Server Components receive dictionary sections through props from pages and layouts (`getDictionary(locale)`). Client Components read `ui` strings with `useI18n()`; only the `ui` section is sent to the browser.
+- Use `{placeholder}` tokens with `formatMessage()` for dynamic values. Server Actions return codes (such as `emailInvalid`), never translated text.
+- Technical documentation data (fields, types, enum values, examples) lives once in `lib/docs.ts`; descriptions come from `docs` in each dictionary and `describe()` throws if one is missing.
+- Each page exports `generateMetadata` with `pageMetadata()` from `lib/i18n/metadata.ts`, which sets the canonical URL, `hreflang` alternates and the Open Graph locale. `app/sitemap.ts` lists every page in every locale.
+- API content (names, titles and descriptions returned by the API) stays in English; the docs say so in Portuguese and Spanish.
 
 ## Code rules
 
@@ -40,7 +55,7 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 - External links (including `mailto:`) open in a new tab with `target="_blank"` and `rel="noreferrer"`. Personal links, the repository and GitHub Sponsors live in `lib/site.ts`.
 - `components/ScrollToTop` smoothly scrolls to the top when the route changes, except for hash links and browser back or forward navigation. Do not add `data-scroll-behavior="smooth"` to `<html>`: it makes Next.js jump to the top instantly and removes the smooth transition. The related dev-only console hint is expected.
 - Below the `sm` breakpoint, the header shows `components/MobileMenu`, a hamburger menu rendered through a portal because the header's `backdrop-blur` would trap fixed-position children.
-- The contact form submits to the `sendContactMessage` Server Action in `app/contact/actions.ts`. Validation lives in `lib/contact.ts` and runs on the server. Message delivery is not implemented yet: until it is, a valid submission returns an error asking the visitor to email the maintainer.
+- The contact form submits to the `sendContactMessage` Server Action in `app/[lang]/contact/actions.ts`. Validation lives in `lib/contact.ts`, runs on the server and returns error codes that the form translates. Message delivery is not implemented yet: until it is, a valid submission returns an error asking the visitor to email the maintainer.
 - Use toasts for feedback messages: call `toast.success()` or `toast.error()` from `lib/toast.ts`; `components/Toaster` is rendered once in the root layout. Field-level validation errors stay inline under each field.
 - Every clickable element shows a pointer cursor. Buttons, selects and other controls get it from `app/globals.css`; keep `cursor-pointer` on any new custom clickable element.
 

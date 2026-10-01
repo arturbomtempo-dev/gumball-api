@@ -1,14 +1,17 @@
-import Image from 'next/image';
 import type { Character } from '@/lib/api';
-import { capitalize } from '@/lib/navigation';
+import { formatMessage } from '@/lib/i18n/config';
+import type { Dictionary } from '@/lib/i18n/dictionaries';
 import { API_URL } from '@/lib/site';
+import Image from 'next/image';
 
 interface CharacterCardProps {
     character: Character;
+    labels: Dictionary['home']['characters'];
 }
 
-export function CharacterCard({ character }: CharacterCardProps) {
-    const details = [character.species, capitalize(character.status)].filter(Boolean).join(' · ');
+export function CharacterCard({ character, labels }: CharacterCardProps) {
+    const status = labels.status[character.status as keyof typeof labels.status] ?? null;
+    const details = [character.species, status].filter(Boolean).join(' · ');
 
     return (
         <a
@@ -31,7 +34,9 @@ export function CharacterCard({ character }: CharacterCardProps) {
                 <p className="truncate text-xs text-muted">{details}</p>
                 {character.firstAppearance ? (
                     <p className="truncate text-xs text-subtle">
-                        First seen in {character.firstAppearance.title}
+                        {formatMessage(labels.firstSeenIn, {
+                            title: character.firstAppearance.title,
+                        })}
                     </p>
                 ) : null}
             </div>

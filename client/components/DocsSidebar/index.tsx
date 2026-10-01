@@ -1,18 +1,26 @@
 'use client';
 
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { DOCS_NAVIGATION, DOCS_SECTION_IDS, type DocsNavItem } from '@/lib/navigation';
+import { useI18n } from '@/hooks/useI18n';
+import { navigationSectionIds, type DocsNavGroup, type DocsNavItem } from '@/lib/navigation';
+import { useMemo } from 'react';
 
 function isWithin(item: DocsNavItem, active: string | undefined): boolean {
     return item.id === active || (item.children ?? []).some((child) => child.id === active);
 }
 
-export function DocsSidebar() {
-    const active = useActiveSection(DOCS_SECTION_IDS);
+interface DocsSidebarProps {
+    navigation: readonly DocsNavGroup[];
+}
+
+export function DocsSidebar({ navigation }: DocsSidebarProps) {
+    const { ui } = useI18n();
+    const ids = useMemo(() => navigationSectionIds(navigation), [navigation]);
+    const active = useActiveSection(ids);
 
     return (
-        <nav aria-label="Documentation" className="space-y-8 text-sm">
-            {DOCS_NAVIGATION.map((group) => (
+        <nav aria-label={ui.docsNav.label} className="space-y-8 text-sm">
+            {navigation.map((group) => (
                 <div key={group.title} className="space-y-2">
                     <p className="px-3 text-xs font-medium tracking-wide text-subtle uppercase">
                         {group.title}

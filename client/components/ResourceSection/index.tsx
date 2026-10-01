@@ -1,78 +1,105 @@
 import { CodeBlock } from '@/components/CodeBlock';
 import { DocHeading } from '@/components/DocHeading';
 import { Endpoint } from '@/components/Endpoint';
-import { Paragraph } from '@/components/Paragraph';
 import { ParameterTable } from '@/components/ParameterTable';
-import { PropertyTable } from '@/components/PropertyTable';
+import { Paragraph } from '@/components/Paragraph';
+import { PropertyTable, type TableLabels } from '@/components/PropertyTable';
 import { TryIt, type TryItParameter } from '@/components/TryIt';
-import { PAGINATION_PARAMETERS, type DocParameter, type ResourceDoc } from '@/lib/docs';
+import {
+    PAGINATION_PARAMETERS,
+    describe,
+    type DocParameter,
+    type ParameterSpec,
+    type ResourceSpec,
+} from '@/lib/docs';
+import { LOCALE_DETAILS, formatMessage, type Locale } from '@/lib/i18n/config';
+import type { Dictionary } from '@/lib/i18n/dictionaries';
 import { formatJson } from '@/lib/json';
-import { capitalize, resourceSections } from '@/lib/navigation';
+import { resourceSectionId } from '@/lib/navigation';
 
 interface ResourceSectionProps {
-    resource: ResourceDoc;
+    locale: Locale;
+    resource: ResourceSpec;
+    docs: Dictionary['docs'];
     example: unknown | null;
     total: number | null;
 }
 
-function toTryIt(parameter: DocParameter): TryItParameter {
+function toTryIt(parameter: ParameterSpec): TryItParameter {
     return { name: parameter.name, placeholder: parameter.placeholder, values: parameter.values };
 }
 
-export function ResourceSection({ resource, example, total }: ResourceSectionProps) {
-    const [schema, all, single, slug, random, filter] = resourceSections(
-        resource.key,
-        resource.singular,
-        resource.plural
-    );
+export function ResourceSection({ locale, resource, docs, example, total }: ResourceSectionProps) {
+    const content = docs.resources[resource.key];
+    const context = `${locale}/${resource.key}`;
+    const fieldLabels: TableLabels = {
+        name: docs.table.key,
+        type: docs.table.type,
+        description: docs.table.description,
+    };
+    const parameterLabels: TableLabels = { ...fieldLabels, name: docs.table.parameter };
     const sort: DocParameter = {
         name: 'sort',
         type: 'string',
-        description: `Field to sort by. Prefix it with \`-\` for descending order. Defaults to \`${resource.defaultSort}\`.`,
+        description: formatMessage(docs.endpoints.sort, { default: resource.defaultSort }),
         values: resource.sortFields.flatMap((field) => [field, `-${field}`]),
     };
     const count: DocParameter = {
         name: 'count',
         type: 'integer',
-        description: `How many items to return, from 1 to ${resource.randomMax}. Defaults to 1.`,
+        description: formatMessage(docs.endpoints.count, { max: resource.randomMax }),
         placeholder: '1',
     };
-    const listParameters = [...PAGINATION_PARAMETERS, sort];
+    const pagination = describe(
+        PAGINATION_PARAMETERS,
+        docs.pagination.parameters,
+        `${context} pagination`
+    );
+    const filters = describe(resource.filters, content.filters, `${context} filters`);
+    const listParameters = [...pagination, sort];
 
     return (
         <section className="space-y-14 border-t border-border pt-14">
             <div className="space-y-3">
-                <DocHeading id={resource.key}>{capitalize(resource.plural)}</DocHeading>
-                <Paragraph>{resource.summary}</Paragraph>
+                <DocHeading id={resource.key}>{content.title}</DocHeading>
+                <Paragraph>{content.summary}</Paragraph>
                 {total !== null ? (
                     <p className="text-sm text-subtle">
-                        {total.toLocaleString('en-US')} {resource.plural} available.
+                        {formatMessage(docs.endpoints.available, {
+                            count: total.toLocaleString(LOCALE_DETAILS[locale].intl),
+                            plural: content.plural,
+                        })}
                     </p>
                 ) : null}
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={schema.id} level={3}>
-                    {schema.label}
+                <DocHeading id={resourceSectionId(resource.key, 'schema')} level={3}>
+                    {content.sections.schema}
                 </DocHeading>
-                <PropertyTable fields={resource.fields} />
+                <PropertyTable
+                    fields={describe(resource.fields, content.fields, `${context} fields`)}
+                    labels={fieldLabels}
+                />
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={all.id} level={3}>
-                    {all.label}
+                <DocHeading id={resourceSectionId(resource.key, 'all')} level={3}>
+                    {content.sections.all}
                 </DocHeading>
-                <Paragraph>{`Returns a paginated list of every ${resource.singular}, 20 per page by default.`}</Paragraph>
+                <Paragraph>
+                    {formatMessage(docs.endpoints.all, { plural: content.plural })}
+                </Paragraph>
                 <Endpoint path={resource.path} />
-                <ParameterTable parameters={listParameters} />
+                <ParameterTable parameters={listParameters} labels={parameterLabels} />
                 <TryIt path={resource.path} queryParameters={listParameters.map(toTryIt)} />
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={single.id} level={3}>
-                    {single.label}
+                <DocHeading id={resourceSectionId(resource.key, 'single')} level={3}>
+                    {content.sections.single}
                 </DocHeading>
-                <Paragraph>{`Returns one ${resource.singular} by its numeric id.`}</Paragraph>
+                <Paragraph>{formatMessage(docs.endpoints.single, { one: content.one })}</Paragraph>
                 <Endpoint path={`${resource.path}/{id}`} />
                 {example ? (
                     <CodeBlock
@@ -91,12 +118,10 @@ export function ResourceSection({ resource, example, total }: ResourceSectionPro
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={slug.id} level={3}>
-                    {slug.label}
+                <DocHeading id={resourceSectionId(resource.key, 'slug')} level={3}>
+                    {content.sections.slug}
                 </DocHeading>
-                <Paragraph>
-                    Slugs are stable, human-readable identifiers, handy for URLs in your own app.
-                </Paragraph>
+                <Paragraph>{docs.endpoints.slug}</Paragraph>
                 <Endpoint path={`${resource.path}/slug/{slug}`} />
                 <TryIt
                     path={`${resource.path}/slug/{slug}`}
@@ -111,12 +136,14 @@ export function ResourceSection({ resource, example, total }: ResourceSectionPro
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={random.id} level={3}>
-                    {random.label}
+                <DocHeading id={resourceSectionId(resource.key, 'random')} level={3}>
+                    {content.sections.random}
                 </DocHeading>
-                <Paragraph>{`Returns an array of random ${resource.plural}. Random responses are never cached, so every request returns a new selection.`}</Paragraph>
+                <Paragraph>
+                    {formatMessage(docs.endpoints.random, { plural: content.plural })}
+                </Paragraph>
                 <Endpoint path={`${resource.path}/random`} />
-                <ParameterTable parameters={[count]} />
+                <ParameterTable parameters={[count]} labels={parameterLabels} />
                 <TryIt
                     path={`${resource.path}/random`}
                     queryParameters={[{ ...toTryIt(count), defaultValue: '3' }]}
@@ -124,20 +151,15 @@ export function ResourceSection({ resource, example, total }: ResourceSectionPro
             </div>
 
             <div className="space-y-4">
-                <DocHeading id={filter.id} level={3}>
-                    {filter.label}
+                <DocHeading id={resourceSectionId(resource.key, 'filter')} level={3}>
+                    {content.sections.filter}
                 </DocHeading>
-                <Paragraph>
-                    Combine any of these query parameters with each other, with pagination and with
-                    sorting.
-                </Paragraph>
-                <ParameterTable parameters={[...resource.filters, sort]} />
+                <Paragraph>{docs.endpoints.filter}</Paragraph>
+                <ParameterTable parameters={[...filters, sort]} labels={parameterLabels} />
                 <CodeBlock code={`GET ${resource.filterExample}`} />
                 <TryIt
                     path={resource.path}
-                    queryParameters={[...resource.filters, sort, ...PAGINATION_PARAMETERS].map(
-                        toTryIt
-                    )}
+                    queryParameters={[...filters, sort, ...pagination].map(toTryIt)}
                 />
             </div>
         </section>

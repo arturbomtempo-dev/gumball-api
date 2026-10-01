@@ -1,4 +1,4 @@
-import { RESOURCES } from './docs';
+import { RESOURCES, type ResourceKey } from './docs';
 import { API_URL } from './site';
 
 const REVALIDATE_SECONDS = 3600;
@@ -37,7 +37,7 @@ export interface Paginated<T> {
 }
 
 export interface ResourceCount {
-    key: string;
+    key: ResourceKey;
     path: string;
     total: number | null;
 }

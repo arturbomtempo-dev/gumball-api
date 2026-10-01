@@ -8,9 +8,14 @@ import { ArrowRightIcon, KeyOffIcon, LayersIcon, LinkIcon } from '@/components/I
 import { ResourceStats } from '@/components/ResourceStats';
 import { SectionIntro } from '@/components/SectionIntro';
 import { getExample, getRandomCharacters, getResourceCounts } from '@/lib/api';
+import { isLocale, localizePath } from '@/lib/i18n/config';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { pageMetadata } from '@/lib/i18n/metadata';
 import { formatJson } from '@/lib/json';
 import { API_URL } from '@/lib/site';
 import logo from '@/public/logo.png';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
 const QUICK_START = [
@@ -37,7 +42,30 @@ function preview(value: unknown): string | null {
     return formatJson(Object.fromEntries(PREVIEW_FIELDS.map((field) => [field, record[field]])));
 }
 
-export default async function HomePage() {
+export async function generateMetadata({ params }: PageProps<'/[lang]'>): Promise<Metadata> {
+    const { lang } = await params;
+
+    if (!isLocale(lang)) {
+        return {};
+    }
+
+    return pageMetadata({
+        locale: lang,
+        path: '/',
+        description: getDictionary(lang).meta.description,
+    });
+}
+
+export default async function HomePage({ params }: PageProps<'/[lang]'>) {
+    const { lang } = await params;
+
+    if (!isLocale(lang)) {
+        notFound();
+    }
+
+    const locale = lang;
+    const { home, docs } = getDictionary(locale);
+    const docsPath = localizePath(locale, '/docs');
     const [counts, characters, example] = await Promise.all([
         getResourceCounts(),
         getRandomCharacters(8),
@@ -52,28 +80,26 @@ export default async function HomePage() {
                     <div className="min-w-0 space-y-8">
                         <div className="space-y-5">
                             <h1 className="text-4xl font-semibold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
-                                The Amazing World of Gumball API
+                                {home.title}
                             </h1>
                             <p className="max-w-xl text-lg leading-8 text-pretty text-muted">
-                                Characters, locations, episodes, seasons, songs, games and
-                                in-universe media from Elmore, ready to use in your next project
-                                through a simple REST API.
+                                {home.description}
                             </p>
                         </div>
                         <div className="flex flex-wrap gap-3">
-                            <ButtonLink href="/docs">
-                                Read the docs
+                            <ButtonLink href={docsPath}>
+                                {home.readDocs}
                                 <ArrowRightIcon />
                             </ButtonLink>
-                            <ButtonLink href="/docs#base-url" variant="secondary">
-                                Make your first request
+                            <ButtonLink href={`${docsPath}#base-url`} variant="secondary">
+                                {home.firstRequest}
                             </ButtonLink>
                         </div>
                     </div>
                     <div className="mx-auto w-64 sm:w-80 lg:w-full">
                         <Image
                             src={logo}
-                            alt="Gumball waving above the Gumball API logo"
+                            alt={home.logoAlt}
                             loading="eager"
                             fetchPriority="high"
                             sizes="(min-width: 1024px) 24rem, 20rem"
@@ -85,26 +111,31 @@ export default async function HomePage() {
 
             <section>
                 <Container className="space-y-8 py-16 sm:py-20">
-                    <SectionIntro eyebrow="Resources" title="Seven resources, one consistent API">
-                        Every resource supports pagination, filters, sorting, lookups by id or slug
-                        and random picks.
+                    <SectionIntro eyebrow={home.resources.eyebrow} title={home.resources.title}>
+                        {home.resources.description}
                     </SectionIntro>
-                    <ResourceStats counts={counts} />
+                    <ResourceStats locale={locale} counts={counts} resources={docs.resources} />
                 </Container>
             </section>
 
             <section className="border-y border-border bg-surface">
                 <Container className="grid gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:items-start">
                     <div className="min-w-0 space-y-8">
-                        <SectionIntro eyebrow="Quick start" title="Your first request in seconds">
-                            No sign-up, no keys and no SDK. Send a GET request from any language and
-                            get JSON back.
+                        <SectionIntro
+                            eyebrow={home.quickStart.eyebrow}
+                            title={home.quickStart.title}
+                        >
+                            {home.quickStart.description}
                         </SectionIntro>
                         <CodeTabs tabs={QUICK_START} />
                     </div>
                     {response ? (
                         <div className="min-w-0">
-                            <CodeBlock code={response} title="Response" language="json" />
+                            <CodeBlock
+                                code={response}
+                                title={home.quickStart.response}
+                                language="json"
+                            />
                         </div>
                     ) : null}
                 </Container>
@@ -114,17 +145,20 @@ export default async function HomePage() {
                 <section>
                     <Container className="space-y-8 py-16 sm:py-20">
                         <div className="flex flex-wrap items-end justify-between gap-4">
-                            <SectionIntro eyebrow="Characters" title="Meet the residents of Elmore">
-                                A random selection from the API, refreshed every hour.
+                            <SectionIntro
+                                eyebrow={home.characters.eyebrow}
+                                title={home.characters.title}
+                            >
+                                {home.characters.description}
                             </SectionIntro>
-                            <ButtonLink href="/docs#characters" variant="secondary">
-                                Explore characters
+                            <ButtonLink href={`${docsPath}#characters`} variant="secondary">
+                                {home.characters.explore}
                             </ButtonLink>
                         </div>
                         <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                             {characters.map((character) => (
                                 <li key={character.id}>
-                                    <CharacterCard character={character} />
+                                    <CharacterCard character={character} labels={home.characters} />
                                 </li>
                             ))}
                         </ul>
@@ -134,17 +168,14 @@ export default async function HomePage() {
 
             <section className="border-t border-border">
                 <Container className="grid gap-10 py-16 sm:grid-cols-3 sm:py-20">
-                    <FeatureCard icon={<KeyOffIcon />} title="Free and open">
-                        No authentication and CORS enabled for every origin. Call it from the
-                        browser, a server or the terminal.
+                    <FeatureCard icon={<KeyOffIcon />} title={home.features.open.title}>
+                        {home.features.open.description}
                     </FeatureCard>
-                    <FeatureCard icon={<LinkIcon />} title="Connected data">
-                        Characters, songs and locations link to the episodes they appear in, so you
-                        can follow the story across resources.
+                    <FeatureCard icon={<LinkIcon />} title={home.features.connected.title}>
+                        {home.features.connected.description}
                     </FeatureCard>
-                    <FeatureCard icon={<LayersIcon />} title="Predictable by design">
-                        The same pagination, filters, sorting and error format on every route, all
-                        documented with live examples.
+                    <FeatureCard icon={<LayersIcon />} title={home.features.predictable.title}>
+                        {home.features.predictable.description}
                     </FeatureCard>
                 </Container>
             </section>

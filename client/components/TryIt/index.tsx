@@ -5,6 +5,7 @@ import { CodeBlock } from '@/components/CodeBlock';
 import { CopyButton } from '@/components/CopyButton';
 import { ChevronDownIcon, PlayIcon } from '@/components/Icons';
 import { MethodBadge } from '@/components/MethodBadge';
+import { useI18n } from '@/hooks/useI18n';
 import { formatJson } from '@/lib/json';
 import { API_URL } from '@/lib/site';
 
@@ -67,6 +68,7 @@ function statusClasses(status: number): string {
 }
 
 export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryItProps) {
+    const { ui } = useI18n();
     const id = useId();
     const parameters = useMemo(
         () => [...pathParameters, ...queryParameters],
@@ -149,7 +151,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
             }
 
             setResult(null);
-            setError('The request could not be completed. Check your connection and try again.');
+            setError(ui.tryIt.networkError);
         } finally {
             if (controller.current === current) {
                 setLoading(false);
@@ -180,7 +182,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
             >
                 <span className="flex items-center gap-2">
                     <PlayIcon className="size-3.5 text-brand" />
-                    Try it
+                    {ui.tryIt.toggle}
                 </span>
                 <ChevronDownIcon
                     className={`text-subtle transition-transform ${open ? 'rotate-180' : ''}`}
@@ -207,7 +209,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                             {parameter.name}
                                             {required ? (
                                                 <span className="font-sans text-[11px] text-subtle">
-                                                    required
+                                                    {ui.tryIt.required}
                                                 </span>
                                             ) : null}
                                         </label>
@@ -220,7 +222,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                                 }
                                                 className="h-9 w-full rounded-lg border border-border-strong bg-background px-2.5 font-mono text-[13px] text-foreground outline-none focus:border-brand focus:ring-3 focus:ring-brand/15"
                                             >
-                                                <option value="">Any</option>
+                                                <option value="">{ui.tryIt.any}</option>
                                                 {parameter.values.map((value) => (
                                                     <option key={value} value={value}>
                                                         {value}
@@ -252,7 +254,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                         <code className="min-w-0 flex-1 truncate font-mono text-[13px] text-foreground">
                             {url}
                         </code>
-                        <CopyButton value={url} label="Copy request URL" />
+                        <CopyButton value={url} labelKey="requestUrl" />
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
@@ -269,14 +271,14 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                             ) : (
                                 <PlayIcon className="size-3.5" />
                             )}
-                            {loading ? 'Sending' : 'Send request'}
+                            {loading ? ui.tryIt.sending : ui.tryIt.send}
                         </button>
                         <button
                             type="button"
                             onClick={reset}
                             className="inline-flex h-9 items-center rounded-lg px-3 text-sm text-muted transition-colors hover:bg-surface-strong hover:text-foreground"
                         >
-                            Reset
+                            {ui.tryIt.reset}
                         </button>
                     </div>
 
@@ -299,7 +301,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
                                 </div>
                                 <CodeBlock
                                     code={result.body}
-                                    title="Response"
+                                    title={ui.tryIt.response}
                                     language={result.isJson ? 'json' : 'text'}
                                     scrollable
                                 />

@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation';
 
 interface NavLinkProps {
     href: string;
+    path: string;
     label: string;
 }
 
-export function NavLink({ href, label }: NavLinkProps) {
-    const pathname = usePathname();
-    const active = isActivePath(pathname, href);
+export function NavLink({ href, path, label }: NavLinkProps) {
+    const active = isActivePath(usePathname(), path);
 
     return (
         <Link

@@ -1,4 +1,5 @@
-import { RESOURCES, sectionId } from './docs';
+import { RESOURCES, sectionId, type ResourceKey } from './docs';
+import type { Dictionary } from './i18n/dictionaries';
 
 export interface DocsNavItem {
     id: string;
@@ -11,49 +12,76 @@ export interface DocsNavGroup {
     items: readonly DocsNavItem[];
 }
 
-export const GUIDE_SECTIONS: readonly DocsNavItem[] = [
-    { id: 'introduction', label: 'Introduction' },
-    { id: 'base-url', label: 'Base URL' },
-    { id: 'rate-limit', label: 'Rate limit and caching' },
-    { id: 'pagination', label: 'Info and pagination' },
-    { id: 'sorting', label: 'Sorting' },
-    { id: 'filtering', label: 'Filtering' },
-    { id: 'references', label: 'Related resources' },
-    { id: 'images', label: 'Images' },
-    { id: 'errors', label: 'Errors' },
-];
+export const GUIDE_SECTION_KEYS = [
+    'introduction',
+    'baseUrl',
+    'rateLimit',
+    'pagination',
+    'sorting',
+    'filtering',
+    'references',
+    'images',
+    'errors',
+] as const;
 
-export function resourceSections(key: string, singular: string, plural: string) {
+export type GuideSectionKey = (typeof GUIDE_SECTION_KEYS)[number];
+
+export const GUIDE_SECTION_IDS: Record<GuideSectionKey, string> = {
+    introduction: 'introduction',
+    baseUrl: 'base-url',
+    rateLimit: 'rate-limit',
+    pagination: 'pagination',
+    sorting: 'sorting',
+    filtering: 'filtering',
+    references: 'references',
+    images: 'images',
+    errors: 'errors',
+};
+
+export const RESOURCE_SECTION_KEYS = [
+    'schema',
+    'all',
+    'single',
+    'slug',
+    'random',
+    'filter',
+] as const;
+
+export type ResourceSectionKey = (typeof RESOURCE_SECTION_KEYS)[number];
+
+export function resourceSectionId(resource: ResourceKey, section: ResourceSectionKey): string {
+    return sectionId(resource, section);
+}
+
+export function buildDocsNavigation(docs: Dictionary['docs']): DocsNavGroup[] {
     return [
-        { id: sectionId(key, 'schema'), label: `${capitalize(singular)} schema` },
-        { id: sectionId(key, 'all'), label: `Get all ${plural}` },
-        { id: sectionId(key, 'single'), label: `Get a single ${singular}` },
-        { id: sectionId(key, 'slug'), label: `Get ${article(singular)} ${singular} by slug` },
-        { id: sectionId(key, 'random'), label: `Get random ${plural}` },
-        { id: sectionId(key, 'filter'), label: `Filter ${plural}` },
+        {
+            title: docs.groups.gettingStarted,
+            items: GUIDE_SECTION_KEYS.map((key) => ({
+                id: GUIDE_SECTION_IDS[key],
+                label: docs.sections[key],
+            })),
+        },
+        {
+            title: docs.groups.resources,
+            items: RESOURCES.map((resource) => {
+                const content = docs.resources[resource.key];
+
+                return {
+                    id: resource.key,
+                    label: content.title,
+                    children: RESOURCE_SECTION_KEYS.map((section) => ({
+                        id: resourceSectionId(resource.key, section),
+                        label: content.sections[section],
+                    })),
+                };
+            }),
+        },
     ];
 }
 
-export function article(word: string): string {
-    return /^[aeiou]/i.test(word) ? 'an' : 'a';
+export function navigationSectionIds(groups: readonly DocsNavGroup[]): string[] {
+    return groups.flatMap((group) =>
+        group.items.flatMap((item) => [item.id, ...(item.children ?? []).map((child) => child.id)])
+    );
 }
-
-export function capitalize(value: string): string {
-    return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
-export const DOCS_NAVIGATION: readonly DocsNavGroup[] = [
-    { title: 'Getting started', items: GUIDE_SECTIONS },
-    {
-        title: 'Resources',
-        items: RESOURCES.map((resource) => ({
-            id: resource.key,
-            label: capitalize(resource.plural),
-            children: resourceSections(resource.key, resource.singular, resource.plural),
-        })),
-    },
-];
-
-export const DOCS_SECTION_IDS: readonly string[] = DOCS_NAVIGATION.flatMap((group) =>
-    group.items.flatMap((item) => [item.id, ...(item.children ?? []).map((child) => child.id)])
-);

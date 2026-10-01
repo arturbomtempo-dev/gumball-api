@@ -23,7 +23,7 @@ export function Endpoint({ path }: EndpointProps) {
                     )
                 )}
             </code>
-            <CopyButton value={`${API_URL}${path}`} label="Copy endpoint URL" />
+            <CopyButton value={`${API_URL}${path}`} labelKey="endpoint" />
         </div>
     );
 }

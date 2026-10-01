@@ -1,21 +1,31 @@
 'use client';
 
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { ChevronDownIcon, MenuIcon } from '@/components/Icons';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { DOCS_NAVIGATION, DOCS_SECTION_IDS } from '@/lib/navigation';
+import { useI18n } from '@/hooks/useI18n';
+import { navigationSectionIds, type DocsNavGroup } from '@/lib/navigation';
 
-const LABELS = new Map(
-    DOCS_NAVIGATION.flatMap((group) =>
-        group.items.flatMap((item) => [
-            [item.id, item.label] as const,
-            ...(item.children ?? []).map((child) => [child.id, child.label] as const),
-        ])
-    )
-);
+interface DocsMobileNavProps {
+    navigation: readonly DocsNavGroup[];
+}
 
-export function DocsMobileNav() {
-    const active = useActiveSection(DOCS_SECTION_IDS);
+export function DocsMobileNav({ navigation }: DocsMobileNavProps) {
+    const { ui } = useI18n();
+    const ids = useMemo(() => navigationSectionIds(navigation), [navigation]);
+    const labels = useMemo(
+        () =>
+            new Map(
+                navigation.flatMap((group) =>
+                    group.items.flatMap((item) => [
+                        [item.id, item.label] as const,
+                        ...(item.children ?? []).map((child) => [child.id, child.label] as const),
+                    ])
+                )
+            ),
+        [navigation]
+    );
+    const active = useActiveSection(ids);
     const details = useRef<HTMLDetailsElement>(null);
 
     function close() {
@@ -30,15 +40,15 @@ export function DocsMobileNav() {
             <summary className="flex h-12 cursor-pointer list-none items-center gap-2 px-5 text-sm sm:px-8 [&::-webkit-details-marker]:hidden">
                 <MenuIcon className="text-subtle" />
                 <span className="min-w-0 flex-1 truncate text-foreground">
-                    {(active && LABELS.get(active)) ?? 'On this page'}
+                    {(active && labels.get(active)) ?? ui.docsNav.onThisPage}
                 </span>
                 <ChevronDownIcon className="text-subtle transition-transform group-open:rotate-180" />
             </summary>
             <nav
-                aria-label="Documentation"
+                aria-label={ui.docsNav.label}
                 className="max-h-[65vh] space-y-6 overflow-y-auto border-t border-border px-5 py-4 text-sm sm:px-8"
             >
-                {DOCS_NAVIGATION.map((group) => (
+                {navigation.map((group) => (
                     <div key={group.title} className="space-y-2">
                         <p className="text-xs font-medium tracking-wide text-subtle uppercase">
                             {group.title}

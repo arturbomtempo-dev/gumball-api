@@ -1,27 +1,34 @@
-import Link from 'next/link';
 import { Container } from '@/components/Container';
+import { localizePath, type Locale } from '@/lib/i18n/config';
+import type { Dictionary } from '@/lib/i18n/dictionaries';
 import { AUTHOR, NAVIGATION, REPOSITORY_URL, SITE_NAME } from '@/lib/site';
+import Link from 'next/link';
 
-export function Footer() {
+interface FooterProps {
+    locale: Locale;
+    dictionary: Dictionary;
+}
+
+export function Footer({ locale, dictionary }: FooterProps) {
     return (
         <footer className="mt-auto border-t border-border">
             <Container className="flex flex-col gap-6 py-10 text-sm text-muted md:flex-row md:items-start md:justify-between">
                 <div className="max-w-md space-y-2">
                     <p className="font-medium text-foreground">{SITE_NAME}</p>
-                    <p className="leading-relaxed">
-                        An unofficial fan project. The Amazing World of Gumball and its characters
-                        are trademarks of Warner Bros. Discovery.
-                    </p>
+                    <p className="leading-relaxed">{dictionary.footer.disclaimer}</p>
                 </div>
                 <div className="flex flex-col gap-3 md:items-end">
-                    <nav aria-label="Footer" className="flex gap-5">
+                    <nav
+                        aria-label={dictionary.ui.nav.footer}
+                        className="flex flex-wrap gap-x-5 gap-y-2"
+                    >
                         {NAVIGATION.map((item) => (
                             <Link
-                                key={item.href}
-                                href={item.href}
+                                key={item.key}
+                                href={localizePath(locale, item.path)}
                                 className="transition-colors hover:text-foreground"
                             >
-                                {item.label}
+                                {dictionary.ui.nav[item.key]}
                             </Link>
                         ))}
                         <a
@@ -34,7 +41,7 @@ export function Footer() {
                         </a>
                     </nav>
                     <p className="text-subtle">
-                        Made by{' '}
+                        {dictionary.footer.madeBy}{' '}
                         <a
                             href={AUTHOR.github}
                             target="_blank"

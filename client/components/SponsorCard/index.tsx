@@ -1,7 +1,12 @@
 import { HeartIcon, StarIcon } from '@/components/Icons';
+import type { Dictionary } from '@/lib/i18n/dictionaries';
 import { AUTHOR, REPOSITORY_URL } from '@/lib/site';
 
-export function SponsorCard() {
+interface SponsorCardProps {
+    text: Dictionary['contact']['sponsor'];
+}
+
+export function SponsorCard({ text }: SponsorCardProps) {
     return (
         <section
             aria-labelledby="support"
@@ -11,21 +16,15 @@ export function SponsorCard() {
                 <div className="space-y-3">
                     <p className="inline-flex items-center gap-2 text-sm font-medium text-highlight">
                         <HeartIcon className="size-4" />
-                        Support the project
+                        {text.eyebrow}
                     </p>
                     <h2
                         id="support"
                         className="text-2xl font-semibold tracking-tight text-balance text-foreground"
                     >
-                        Free for everyone, made with care
+                        {text.title}
                     </h2>
-                    <p className="max-w-xl leading-7 text-pretty text-muted">
-                        The Gumball API is free and open source, and it will stay that way.
-                        Researching and writing original data for hundreds of entries, preparing
-                        every image and keeping the servers online takes time and money. If the API
-                        is useful to you, consider sponsoring its development. Every contribution
-                        helps keep it online, accurate and growing.
-                    </p>
+                    <p className="max-w-xl leading-7 text-pretty text-muted">{text.description}</p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
                     <a
@@ -35,7 +34,7 @@ export function SponsorCard() {
                         className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
                     >
                         <HeartIcon className="text-pink-400" />
-                        Sponsor on GitHub
+                        {text.sponsor}
                     </a>
                     <a
                         href={REPOSITORY_URL}
@@ -44,13 +43,12 @@ export function SponsorCard() {
                         className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border-strong bg-background px-4 text-sm font-medium text-foreground transition-colors hover:bg-surface-strong"
                     >
                         <StarIcon />
-                        Star the repository
+                        {text.star}
                     </a>
                 </div>
             </div>
             <p className="border-t border-border px-6 py-4 text-sm text-muted sm:px-8">
-                Not able to sponsor? Starring the repository, reporting wrong data and sharing the
-                API with other developers help just as much.
+                {text.footnote}
             </p>
         </section>
     );

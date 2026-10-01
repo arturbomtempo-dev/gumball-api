@@ -1,13 +1,15 @@
 'use client';
 
 import { MoonIcon, SunIcon } from '@/components/Icons';
+import { useI18n } from '@/hooks/useI18n';
 import { getServerTheme, getTheme, setTheme, subscribeToTheme, syncThemeColor } from '@/lib/theme';
 import { useEffect, useSyncExternalStore } from 'react';
 
 export function ThemeToggle() {
+    const { ui } = useI18n();
     const theme = useSyncExternalStore(subscribeToTheme, getTheme, getServerTheme);
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    const label = `Switch to ${nextTheme} theme`;
+    const label = ui.theme[nextTheme];
 
     useEffect(() => {
         syncThemeColor(theme);

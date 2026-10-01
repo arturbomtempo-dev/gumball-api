@@ -1,3 +1,5 @@
+import { splitLocale } from './i18n/config';
+
 export const API_URL = (
     process.env.NEXT_PUBLIC_API_URL ?? 'https://gumball-api-server.vercel.app'
 ).replace(/\/$/, '');
@@ -9,9 +11,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
       : 'http://localhost:3000';
 
 export const SITE_NAME = 'Gumball API';
-
-export const SITE_DESCRIPTION =
-    'A free, read-only REST API about The Amazing World of Gumball: characters, locations, episodes, seasons, songs, games and in-universe media.';
 
 export const AUTHOR = {
     name: 'Artur Bomtempo',
@@ -25,11 +24,15 @@ export const AUTHOR = {
 export const REPOSITORY_URL = 'https://github.com/arturbomtempo-dev/gumball-api';
 
 export const NAVIGATION = [
-    { href: '/', label: 'Home' },
-    { href: '/docs', label: 'Docs' },
-    { href: '/contact', label: 'Contact' },
+    { path: '/', key: 'home' },
+    { path: '/docs', key: 'docs' },
+    { path: '/contact', key: 'contact' },
 ] as const;
 
-export function isActivePath(pathname: string, href: string): boolean {
-    return href === '/' ? pathname === '/' : pathname.startsWith(href);
+export type NavigationKey = (typeof NAVIGATION)[number]['key'];
+
+export function isActivePath(pathname: string, path: string): boolean {
+    const current = splitLocale(pathname).path;
+
+    return path === '/' ? current === '/' : current.startsWith(path);
 }

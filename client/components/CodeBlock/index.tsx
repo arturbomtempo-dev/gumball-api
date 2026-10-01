@@ -14,12 +14,12 @@ export function CodeBlock({ code, title, language = 'text', scrollable = false }
             {title ? (
                 <figcaption className="flex h-10 items-center justify-between border-b border-border pr-1 pl-4 text-xs text-subtle">
                     <span className="font-mono">{title}</span>
-                    <CopyButton value={code} label="Copy code" />
+                    <CopyButton value={code} labelKey="code" />
                 </figcaption>
             ) : (
                 <CopyButton
                     value={code}
-                    label="Copy code"
+                    labelKey="code"
                     className="absolute top-2 right-2 bg-code-background opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
                 />
             )}

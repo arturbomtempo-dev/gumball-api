@@ -1,6 +1,8 @@
 'use client';
 
 import { ArrowUpRightIcon, CloseIcon, GithubIcon, MenuIcon } from '@/components/Icons';
+import { useI18n } from '@/hooks/useI18n';
+import { localizePath } from '@/lib/i18n/config';
 import { NAVIGATION, REPOSITORY_URL, isActivePath } from '@/lib/site';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 export function MobileMenu() {
+    const { locale, ui } = useI18n();
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
     const [currentPathname, setCurrentPathname] = useState(pathname);
@@ -54,7 +57,7 @@ export function MobileMenu() {
                 type="button"
                 aria-expanded={open}
                 aria-controls="mobile-menu"
-                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-label={open ? ui.nav.closeMenu : ui.nav.openMenu}
                 onClick={() => setOpen((current) => !current)}
                 className="-mr-2 inline-flex size-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-surface-strong sm:hidden"
             >
@@ -72,18 +75,18 @@ export function MobileMenu() {
                               className="absolute inset-0 animate-fade-in bg-overlay backdrop-blur-[2px]"
                           />
                           <nav
-                              aria-label="Mobile"
+                              aria-label={ui.nav.mobile}
                               className="relative animate-menu-in border-b border-border bg-background px-5 pt-2 pb-5 shadow-elevated"
                           >
                               <ul className="divide-y divide-border">
                                   {NAVIGATION.map((item, index) => {
-                                      const active = isActivePath(pathname, item.href);
+                                      const active = isActivePath(pathname, item.path);
 
                                       return (
-                                          <li key={item.href}>
+                                          <li key={item.key}>
                                               <Link
                                                   ref={index === 0 ? firstLink : undefined}
-                                                  href={item.href}
+                                                  href={localizePath(locale, item.path)}
                                                   aria-current={active ? 'page' : undefined}
                                                   onClick={() => setOpen(false)}
                                                   className={`flex items-center justify-between py-3.5 text-base transition-colors ${
@@ -92,7 +95,7 @@ export function MobileMenu() {
                                                           : 'text-muted hover:text-foreground'
                                                   }`}
                                               >
-                                                  {item.label}
+                                                  {ui.nav[item.key]}
                                                   {active ? (
                                                       <span className="size-1.5 rounded-full bg-brand" />
                                                   ) : null}
@@ -108,7 +111,7 @@ export function MobileMenu() {
                                   className="mt-3 flex h-11 items-center justify-center gap-2 rounded-lg border border-border-strong text-sm font-medium text-foreground transition-colors hover:bg-surface-strong"
                               >
                                   <GithubIcon width={16} height={16} />
-                                  View on GitHub
+                                  {ui.nav.viewOnGithub}
                                   <ArrowUpRightIcon className="text-subtle" />
                               </a>
                           </nav>

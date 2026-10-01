@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import { CopyButton } from '@/components/CopyButton';
+import { useI18n } from '@/hooks/useI18n';
 
 interface CodeTab {
     label: string;
@@ -13,6 +14,7 @@ interface CodeTabsProps {
 }
 
 export function CodeTabs({ tabs }: CodeTabsProps) {
+    const { ui } = useI18n();
     const [selected, setSelected] = useState(0);
     const id = useId();
     const current = tabs[selected];
@@ -20,7 +22,7 @@ export function CodeTabs({ tabs }: CodeTabsProps) {
     return (
         <div className="overflow-hidden rounded-xl border border-border bg-code-background">
             <div className="flex items-center justify-between border-b border-border pr-1 pl-2">
-                <div role="tablist" aria-label="Code examples" className="flex">
+                <div role="tablist" aria-label={ui.codeExamples} className="flex">
                     {tabs.map((tab, index) => (
                         <button
                             key={tab.label}
@@ -40,7 +42,7 @@ export function CodeTabs({ tabs }: CodeTabsProps) {
                         </button>
                     ))}
                 </div>
-                <CopyButton value={current.code} label="Copy code" />
+                <CopyButton value={current.code} labelKey="code" />
             </div>
             <pre
                 role="tabpanel"

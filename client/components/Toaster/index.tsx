@@ -1,6 +1,7 @@
 'use client';
 
 import { AlertCircleIcon, CheckCircleIcon, CloseIcon } from '@/components/Icons';
+import { useI18n } from '@/hooks/useI18n';
 import { dismissToast, getServerToasts, getToasts, subscribeToToasts } from '@/lib/toast';
 import { useSyncExternalStore } from 'react';
 
@@ -10,11 +11,12 @@ const VARIANTS = {
 };
 
 export function Toaster() {
+    const { ui } = useI18n();
     const toasts = useSyncExternalStore(subscribeToToasts, getToasts, getServerToasts);
 
     return (
         <section
-            aria-label="Notifications"
+            aria-label={ui.toast.region}
             aria-live="polite"
             className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex flex-col items-center gap-2 p-4 sm:inset-x-auto sm:right-0 sm:items-end sm:p-6"
         >
@@ -39,7 +41,7 @@ export function Toaster() {
                         <button
                             type="button"
                             onClick={() => dismissToast(toast.id)}
-                            aria-label="Dismiss notification"
+                            aria-label={ui.toast.dismiss}
                             className="-mt-1 -mr-1 inline-flex size-7 shrink-0 items-center justify-center rounded-md text-subtle transition-colors hover:bg-surface-strong hover:text-foreground"
                         >
                             <CloseIcon width={14} height={14} />

@@ -1,27 +1,39 @@
 export const CONTACT_SUBJECTS = [
-    'General question',
-    'Data correction',
-    'Bug report',
-    'Feature request',
-    'Partnership or sponsorship',
-    'Other',
+    'general',
+    'data-correction',
+    'bug-report',
+    'feature-request',
+    'partnership',
+    'other',
 ] as const;
 
+export type ContactSubject = (typeof CONTACT_SUBJECTS)[number];
+
 export const CONTACT_LIMITS = {
+    nameMin: 2,
     name: 100,
     email: 254,
     messageMin: 20,
     messageMax: 2000,
 } as const;
 
-export type ContactField = 'name' | 'email' | 'subject' | 'message';
+export const CONTACT_FIELDS = ['name', 'email', 'subject', 'message'] as const;
+
+export type ContactField = (typeof CONTACT_FIELDS)[number];
 
 export type ContactValues = Record<ContactField, string>;
 
+export type ContactErrorCode =
+    | 'nameRequired'
+    | 'nameTooLong'
+    | 'emailInvalid'
+    | 'subjectRequired'
+    | 'messageTooShort'
+    | 'messageTooLong';
+
 export interface ContactFormState {
-    status: 'idle' | 'invalid' | 'error' | 'success';
-    message: string | null;
-    errors: Partial<Record<ContactField, string>>;
+    status: 'idle' | 'invalid' | 'unavailable' | 'success';
+    errors: Partial<Record<ContactField, ContactErrorCode>>;
     values: ContactValues;
 }
 
@@ -34,7 +46,6 @@ export const EMPTY_CONTACT_VALUES: ContactValues = {
 
 export const INITIAL_CONTACT_STATE: ContactFormState = {
     status: 'idle',
-    message: null,
     errors: {},
     values: EMPTY_CONTACT_VALUES,
 };
@@ -56,24 +67,24 @@ export function parseContactForm(formData: FormData) {
     };
     const errors: ContactFormState['errors'] = {};
 
-    if (values.name.length < 2) {
-        errors.name = 'Please enter your name.';
+    if (values.name.length < CONTACT_LIMITS.nameMin) {
+        errors.name = 'nameRequired';
     } else if (values.name.length > CONTACT_LIMITS.name) {
-        errors.name = `Your name must have at most ${CONTACT_LIMITS.name} characters.`;
+        errors.name = 'nameTooLong';
     }
 
     if (!EMAIL_PATTERN.test(values.email) || values.email.length > CONTACT_LIMITS.email) {
-        errors.email = 'Please enter a valid email address.';
+        errors.email = 'emailInvalid';
     }
 
     if (!(CONTACT_SUBJECTS as readonly string[]).includes(values.subject)) {
-        errors.subject = 'Please choose a subject.';
+        errors.subject = 'subjectRequired';
     }
 
     if (values.message.length < CONTACT_LIMITS.messageMin) {
-        errors.message = `Your message must have at least ${CONTACT_LIMITS.messageMin} characters.`;
+        errors.message = 'messageTooShort';
     } else if (values.message.length > CONTACT_LIMITS.messageMax) {
-        errors.message = `Your message must have at most ${CONTACT_LIMITS.messageMax} characters.`;
+        errors.message = 'messageTooLong';
     }
 
     return { values, errors, isSpam: read(formData, 'website') !== '' };

@@ -33,21 +33,29 @@ describe('Gumball API (e2e)', () => {
         await app.close();
     });
 
-    it('GET /health reports the database as up', async () => {
-        prismaMock.$queryRaw.mockResolvedValueOnce([{ result: 1 }]);
+    it('GET / lists every resource', async () => {
+        const response = await request(app.getHttpServer()).get('/').expect(200);
 
-        const response = await request(app.getHttpServer()).get('/health').expect(200);
-
-        expect(response.body.status).toBe('ok');
-        expect(response.headers['cache-control']).toContain('no-store');
+        expect(response.body).toEqual({
+            characters: '/characters',
+            locations: '/locations',
+            episodes: '/episodes',
+            seasons: '/seasons',
+            songs: '/songs',
+            games: '/games',
+            media: '/media',
+        });
+        expect(response.headers['cache-control']).toContain('public');
     });
 
-    it('GET /health returns 503 when the database is unreachable', async () => {
-        prismaMock.$queryRaw.mockRejectedValueOnce(new Error('connection refused'));
+    it('GET / does not query the database', async () => {
+        await request(app.getHttpServer()).get('/').expect(200);
 
-        const response = await request(app.getHttpServer()).get('/health').expect(503);
+        expect(prismaMock.$queryRaw).not.toHaveBeenCalled();
+    });
 
-        expect(response.body.statusCode).toBe(503);
+    it.each(['post', 'put', 'patch', 'delete'] as const)('%s / is not exposed', async (method) => {
+        await request(app.getHttpServer())[method]('/').send({}).expect(404);
     });
 
     it('returns a consistent error body for unknown routes', async () => {
@@ -61,7 +69,7 @@ describe('Gumball API (e2e)', () => {
     });
 
     it('sets security headers', async () => {
-        const response = await request(app.getHttpServer()).get('/health');
+        const response = await request(app.getHttpServer()).get('/');
 
         expect(response.headers['x-powered-by']).toBeUndefined();
         expect(response.headers['x-content-type-options']).toBe('nosniff');

@@ -9,9 +9,6 @@ export function buildLoggerConfig(config: AppConfigService): Params {
                 ? undefined
                 : { target: 'pino-pretty', options: { singleLine: true } },
             redact: ['req.headers.authorization', 'req.headers.cookie'],
-            autoLogging: {
-                ignore: (request) => request.url === '/health',
-            },
             customProps: () => ({ context: 'HTTP' }),
         },
     };

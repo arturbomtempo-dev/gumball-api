@@ -10,9 +10,9 @@ import { DatabaseModule } from './database/database.module.js';
 import { CharactersModule } from './modules/characters/characters.module.js';
 import { EpisodesModule } from './modules/episodes/episodes.module.js';
 import { GamesModule } from './modules/games/games.module.js';
-import { HealthModule } from './modules/health/health.module.js';
 import { LocationsModule } from './modules/locations/locations.module.js';
 import { MediaModule } from './modules/media/media.module.js';
+import { RootModule } from './modules/root/root.module.js';
 import { SeasonsModule } from './modules/seasons/seasons.module.js';
 import { SongsModule } from './modules/songs/songs.module.js';
 
@@ -35,7 +35,7 @@ import { SongsModule } from './modules/songs/songs.module.js';
             }),
         }),
         DatabaseModule,
-        HealthModule,
+        RootModule,
         CharactersModule,
         LocationsModule,
         EpisodesModule,

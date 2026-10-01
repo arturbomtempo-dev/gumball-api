@@ -58,17 +58,16 @@
 - [Documentações Utilizadas](#-documentações-utilizadas)
 - [Autor](#-autor)
 - [Contribuição](#-contribuição)
-- [Agradecimentos](#-agradecimentos)
 - [Licença](#-licença)
 
 ---
 
 ## 🔗 Links Úteis
 
+- **Site e documentação:** [gumball-api.vercel.app](https://gumball-api.vercel.app)
+  Apresentação da API, documentação completa com testes interativos em cada rota e página de contato, em inglês, português e espanhol.
 - **API em produção:** [gumball-api-server.vercel.app](https://gumball-api-server.vercel.app)
-  > A raiz da API lista todos os recursos disponíveis e é um bom ponto de partida.
-- **Documentação técnica da API:** [server/README.md](server/README.md)
-  > Rotas, filtros, ordenação, variáveis de ambiente e o modelo de segurança do banco de dados.
+  A raiz da API lista todos os recursos disponíveis e é um bom ponto de partida.
 
 ---
 
@@ -221,9 +220,6 @@ npm install
 cd ../client
 npm install
 ```
-
-> [!NOTE]
-> No `server`, o `npm install` também gera o Prisma Client automaticamente.
 
 ---
 
@@ -441,20 +437,6 @@ Para contribuir com código:
 4. Rode as validações do projeto alterado (formatação, lint, typecheck, testes e build).
 5. Faça o `push` para a branch (`git push origin feat/minha-alteracao`).
 6. Abra um **Pull Request** descrevendo a mudança.
-
-> [!IMPORTANT]
-> O conteúdo deve ser exclusivo de _The Amazing World of Gumball_ e _The Wonderfully Weird World of Gumball_. Crossovers com outras séries do Cartoon Network não são aceitos.
-
----
-
-## 🙏 Agradecimentos
-
-- [**The Amazing World of Gumball Wiki**](https://theamazingworldofgumball.fandom.com) pela comunidade de fãs que documenta a série com tanto cuidado e que serviu como fonte de pesquisa.
-- [**The Rick and Morty API**](https://rickandmortyapi.com) pela inspiração na estrutura da API e da documentação.
-- [**PokéAPI**](https://pokeapi.co) por mostrar como uma API de fãs pode ser útil para toda a comunidade de desenvolvimento.
-
-> [!NOTE]
-> Este é um projeto de fã, não oficial. _The Amazing World of Gumball_ e seus personagens são marcas registradas da Warner Bros. Discovery. O projeto não tem vínculo nem aprovação da Warner Bros. Discovery ou do Cartoon Network.
 
 ---
 

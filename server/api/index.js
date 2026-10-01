@@ -1,1 +1,1 @@
-export { default } from '../dist/serverless.js';
+export { default } from '../dist/serverless.bundle.js';

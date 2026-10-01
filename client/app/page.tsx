@@ -1,4 +1,3 @@
-import { BaseUrl } from '@/components/BaseUrl';
 import { ButtonLink } from '@/components/ButtonLink';
 import { CharacterCard } from '@/components/CharacterCard';
 import { CodeBlock } from '@/components/CodeBlock';
@@ -52,10 +51,6 @@ export default async function HomePage() {
                 <Container className="grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1fr)_24rem] lg:py-24">
                     <div className="min-w-0 space-y-8">
                         <div className="space-y-5">
-                            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
-                                <span className="size-1.5 rounded-full bg-emerald-500" />
-                                Free · Read-only · No API key
-                            </p>
                             <h1 className="text-4xl font-semibold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
                                 The Amazing World of Gumball API
                             </h1>
@@ -74,7 +69,6 @@ export default async function HomePage() {
                                 Make your first request
                             </ButtonLink>
                         </div>
-                        <BaseUrl />
                     </div>
                     <div className="mx-auto w-64 sm:w-80 lg:w-full">
                         <Image

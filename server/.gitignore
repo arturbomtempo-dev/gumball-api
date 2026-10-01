@@ -17,3 +17,4 @@ src/generated
 .idea
 .vscode/*
 !.vscode/extensions.json
+.vercel

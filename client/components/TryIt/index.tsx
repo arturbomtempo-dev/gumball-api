@@ -56,14 +56,14 @@ function formatBytes(bytes: number): string {
 
 function statusClasses(status: number): string {
     if (status >= 500) {
-        return 'bg-red-50 text-red-700 ring-red-600/20';
+        return 'bg-danger-soft text-danger ring-danger-ring';
     }
 
     if (status >= 400) {
-        return 'bg-amber-50 text-amber-800 ring-amber-600/25';
+        return 'bg-warning-soft text-warning ring-warning-ring';
     }
 
-    return 'bg-emerald-50 text-emerald-700 ring-emerald-600/20';
+    return 'bg-success-soft text-success ring-success-ring';
 }
 
 export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryItProps) {
@@ -282,7 +282,7 @@ export function TryIt({ path, pathParameters = [], queryParameters = [] }: TryIt
 
                     <div aria-live="polite" className="space-y-2">
                         {error ? (
-                            <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                            <p className="rounded-lg border border-danger-ring bg-danger-soft px-3 py-2 text-sm text-danger">
                                 {error}
                             </p>
                         ) : null}

@@ -9,7 +9,7 @@ export function SponsorCard() {
         >
             <div className="grid gap-8 p-6 sm:p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
                 <div className="space-y-3">
-                    <p className="inline-flex items-center gap-2 text-sm font-medium text-pink-600">
+                    <p className="inline-flex items-center gap-2 text-sm font-medium text-highlight">
                         <HeartIcon className="size-4" />
                         Support the project
                     </p>

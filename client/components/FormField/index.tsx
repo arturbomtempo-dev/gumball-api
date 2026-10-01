@@ -19,7 +19,7 @@ export function FormField({ id, label, error, hint, children }: FormFieldProps) 
             </div>
             {children}
             {error ? (
-                <p id={`${id}-error`} className="text-sm text-red-600">
+                <p id={`${id}-error`} className="text-sm text-danger">
                     {error}
                 </p>
             ) : null}

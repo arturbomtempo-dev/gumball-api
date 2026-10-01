@@ -13,7 +13,7 @@ import { toast } from '@/lib/toast';
 import { useActionState, useEffect, useState } from 'react';
 
 const INPUT_CLASSES =
-    'w-full rounded-lg border bg-background px-3.5 text-sm text-foreground transition-colors outline-none placeholder:text-subtle focus:border-brand focus:ring-3 focus:ring-brand/15 aria-invalid:border-red-400 aria-invalid:focus:ring-red-500/15';
+    'w-full rounded-lg border bg-background px-3.5 text-sm text-foreground transition-colors outline-none placeholder:text-subtle focus:border-brand focus:ring-3 focus:ring-brand/15 aria-invalid:border-danger/60 aria-invalid:focus:ring-danger/15';
 
 const FIELD_ORDER: readonly ContactField[] = ['name', 'email', 'subject', 'message'];
 
@@ -68,7 +68,7 @@ export function ContactForm() {
         <form
             action={formAction}
             noValidate
-            className="space-y-6 rounded-2xl border border-border bg-background p-6 shadow-[0_1px_2px_rgba(24,24,27,0.04)] sm:p-8"
+            className="space-y-6 rounded-2xl border border-border bg-background p-6 shadow-xs sm:p-8"
         >
             <div className="grid gap-6 sm:grid-cols-2">
                 <FormField id="name" label="Name" error={state.errors.name}>

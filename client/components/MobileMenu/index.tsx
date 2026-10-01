@@ -69,11 +69,11 @@ export function MobileMenu() {
                           <div
                               aria-hidden="true"
                               onClick={() => setOpen(false)}
-                              className="absolute inset-0 animate-fade-in bg-foreground/15 backdrop-blur-[2px]"
+                              className="absolute inset-0 animate-fade-in bg-overlay backdrop-blur-[2px]"
                           />
                           <nav
                               aria-label="Mobile"
-                              className="relative animate-menu-in border-b border-border bg-background px-5 pt-2 pb-5 shadow-[0_16px_32px_-16px_rgba(24,24,27,0.2)]"
+                              className="relative animate-menu-in border-b border-border bg-background px-5 pt-2 pb-5 shadow-elevated"
                           >
                               <ul className="divide-y divide-border">
                                   {NAVIGATION.map((item, index) => {

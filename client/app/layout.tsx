@@ -3,6 +3,7 @@ import { Header } from '@/components/Header';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { Toaster } from '@/components/Toaster';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
+import { THEME_SCRIPT } from '@/lib/theme';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -46,7 +47,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
     return (
-        <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <html
+            lang="en"
+            data-theme="light"
+            suppressHydrationWarning
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+            </head>
             <body className="flex min-h-dvh flex-col">
                 <a
                     href="#content"

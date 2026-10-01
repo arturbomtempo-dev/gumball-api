@@ -80,7 +80,8 @@ export default async function HomePage() {
                         <Image
                             src={logo}
                             alt="Gumball waving above the Gumball API logo"
-                            priority
+                            loading="eager"
+                            fetchPriority="high"
                             sizes="(min-width: 1024px) 24rem, 20rem"
                             className="h-auto w-full drop-shadow-[0_18px_30px_rgba(11,134,201,0.18)]"
                         />

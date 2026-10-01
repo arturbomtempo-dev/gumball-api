@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 :root {
+    color-scheme: light;
     --background: #ffffff;
     --surface: #fafaf9;
     --surface-strong: #f4f4f2;
@@ -12,12 +15,57 @@
     --brand: #0b86c9;
     --brand-strong: #0a6da3;
     --brand-soft: #e8f6fe;
+    --success: #047857;
+    --success-soft: #ecfdf5;
+    --success-ring: rgb(5 150 105 / 0.22);
+    --danger: #b91c1c;
+    --danger-soft: #fef2f2;
+    --danger-ring: rgb(220 38 38 / 0.22);
+    --warning: #92400e;
+    --warning-soft: #fffbeb;
+    --warning-ring: rgb(217 119 6 / 0.25);
+    --highlight: #db2777;
+    --shadow-color: rgb(24 24 27 / 0.22);
+    --overlay: rgb(24 24 27 / 0.15);
     --code-background: #fbfbfa;
     --code-key: #0a6da3;
     --code-string: #15803d;
     --code-number: #c2410c;
     --code-literal: #7c3aed;
     --code-punctuation: #8a8a93;
+}
+
+:root[data-theme='dark'] {
+    color-scheme: dark;
+    --background: #0e0e10;
+    --surface: #151518;
+    --surface-strong: #1d1d21;
+    --border: #26262b;
+    --border-strong: #35353c;
+    --foreground: #ededef;
+    --muted: #a6a6ae;
+    --subtle: #75757e;
+    --brand: #3db5ef;
+    --brand-strong: #7dd0f8;
+    --brand-soft: rgb(61 181 239 / 0.14);
+    --success: #34d399;
+    --success-soft: rgb(16 185 129 / 0.12);
+    --success-ring: rgb(52 211 153 / 0.28);
+    --danger: #f87171;
+    --danger-soft: rgb(239 68 68 / 0.12);
+    --danger-ring: rgb(248 113 113 / 0.3);
+    --warning: #fbbf24;
+    --warning-soft: rgb(245 158 11 / 0.12);
+    --warning-ring: rgb(251 191 36 / 0.3);
+    --highlight: #f472b6;
+    --shadow-color: rgb(0 0 0 / 0.55);
+    --overlay: rgb(0 0 0 / 0.55);
+    --code-background: #121215;
+    --code-key: #7cc8f2;
+    --code-string: #86d993;
+    --code-number: #f5a66d;
+    --code-literal: #c4a1ff;
+    --code-punctuation: #75757e;
 }
 
 @theme inline {
@@ -32,6 +80,18 @@
     --color-brand: var(--brand);
     --color-brand-strong: var(--brand-strong);
     --color-brand-soft: var(--brand-soft);
+    --color-success: var(--success);
+    --color-success-soft: var(--success-soft);
+    --color-success-ring: var(--success-ring);
+    --color-danger: var(--danger);
+    --color-danger-soft: var(--danger-soft);
+    --color-danger-ring: var(--danger-ring);
+    --color-warning: var(--warning);
+    --color-warning-soft: var(--warning-soft);
+    --color-warning-ring: var(--warning-ring);
+    --color-highlight: var(--highlight);
+    --color-overlay: var(--overlay);
+    --shadow-elevated: 0 12px 32px -12px var(--shadow-color);
     --color-code-background: var(--code-background);
     --color-code-key: var(--code-key);
     --color-code-string: var(--code-string);

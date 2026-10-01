@@ -5,8 +5,8 @@ import { dismissToast, getServerToasts, getToasts, subscribeToToasts } from '@/l
 import { useSyncExternalStore } from 'react';
 
 const VARIANTS = {
-    success: { icon: CheckCircleIcon, iconClasses: 'text-emerald-600' },
-    error: { icon: AlertCircleIcon, iconClasses: 'text-red-600' },
+    success: { icon: CheckCircleIcon, iconClasses: 'text-success' },
+    error: { icon: AlertCircleIcon, iconClasses: 'text-danger' },
 };
 
 export function Toaster() {
@@ -25,7 +25,7 @@ export function Toaster() {
                     <div
                         key={toast.id}
                         role={toast.variant === 'error' ? 'alert' : 'status'}
-                        className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl border border-border bg-background p-4 shadow-[0_12px_32px_-12px_rgba(24,24,27,0.25)] ${
+                        className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl border border-border bg-background p-4 shadow-elevated ${
                             toast.leaving ? 'animate-toast-out' : 'animate-toast-in'
                         }`}
                     >

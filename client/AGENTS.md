@@ -31,7 +31,9 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 
 ## Design
 
-- Minimalist, professional and light-themed. Colors are tokens on `:root`, so a dark theme can be added later by redefining them.
+- Minimalist and professional, with a light theme by default and an optional dark theme. Colors are tokens defined on `:root` and redefined under `:root[data-theme='dark']` in `app/globals.css`. Never hard-code colors: use the token classes, including the semantic `success`, `danger`, `warning`, `highlight`, `overlay` and `shadow-elevated`.
+- The theme toggle (`components/ThemeToggle`) stores the choice in `localStorage` under `gumball-api-theme` through `lib/theme.ts`. The inline `THEME_SCRIPT` in the root layout applies it before the first paint, which is why `<html>` has `suppressHydrationWarning`. The `dark:` variant targets `[data-theme='dark']`.
+- Use `loading="eager"` and `fetchPriority` instead of the deprecated `priority` prop on `next/image`.
 - The documentation follows the structure of the Rick and Morty API docs: a sidebar per section, the base URL, schema tables for every resource and examples for every route.
 - Every endpoint has a `Try it` panel that sends a real request to the API from the browser.
 - `public/logo.png` is the only logo file, with a transparent background. Never add copies of it: the favicon (`app/icon.tsx`), the Apple touch icon (`app/apple-icon.tsx`) and the social preview (`app/opengraph-image.tsx`) are generated from it at build time.

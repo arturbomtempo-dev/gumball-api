@@ -51,7 +51,8 @@ The home page, documentation and contact page of the Gumball API, a free, read-o
 - Use `loading="eager"` and `fetchPriority` instead of the deprecated `priority` prop on `next/image`.
 - The documentation follows the structure of the Rick and Morty API docs: a sidebar per section, the base URL, schema tables for every resource and examples for every route.
 - Every endpoint has a `Try it` panel that sends a real request to the API from the browser.
-- `public/logo.png` is the only logo file, with a transparent background. Never add copies of it: the favicon (`app/icon.tsx`), the Apple touch icon (`app/apple-icon.tsx`) and the social preview (`app/opengraph-image.tsx`) are generated from it at build time.
+- `public/logo.png` is the full-color logo, used on the home page and as the source of the favicon (`app/icon.tsx`), the Apple touch icon (`app/apple-icon.tsx`) and the social preview (`app/opengraph-image.tsx`), which are generated from it at build time. Never add copies of it.
+- The header uses `components/BrandMark`, a vector line-art mark of Gumball traced from the original drawing. It inherits `currentColor`, so it follows the light and dark themes. Use it wherever the brand appears at small sizes.
 - External links (including `mailto:`) open in a new tab with `target="_blank"` and `rel="noreferrer"`. Personal links, the repository and GitHub Sponsors live in `lib/site.ts`.
 - `components/ScrollToTop` smoothly scrolls to the top when the route changes, except for hash links and browser back or forward navigation. Do not add `data-scroll-behavior="smooth"` to `<html>`: it makes Next.js jump to the top instantly and removes the smooth transition. The related dev-only console hint is expected.
 - Below the `sm` breakpoint, the header shows `components/MobileMenu`, a hamburger menu rendered through a portal because the header's `backdrop-blur` would trap fixed-position children.

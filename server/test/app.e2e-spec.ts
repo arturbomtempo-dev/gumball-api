@@ -33,10 +33,14 @@ describe('Gumball API (e2e)', () => {
         await app.close();
     });
 
-    it('GET / lists every resource', async () => {
+    it('GET / describes the API and lists every resource', async () => {
         const response = await request(app.getHttpServer()).get('/').expect(200);
 
-        expect(response.body).toEqual({
+        expect(response.body).toMatchObject({
+            name: 'The Amazing World of Gumball API',
+            description: expect.stringContaining('read-only'),
+        });
+        expect(response.body.resources).toEqual({
             characters: '/characters',
             locations: '/locations',
             episodes: '/episodes',

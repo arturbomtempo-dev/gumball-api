@@ -1,10 +1,13 @@
-import type { ContactSubject, ContactValues } from './contact';
-import { LOCALE_DETAILS, type Locale } from './i18n/config';
-import { getDictionary } from './i18n/dictionaries';
-import { AUTHOR, SITE_NAME, SITE_URL } from './site';
+import type { ContactValues } from './contact';
+import { AUTHOR, SITE_NAME } from './site';
 
 const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${encodeURIComponent(AUTHOR.email)}`;
-const TIMEOUT_MS = 10_000;
+const TIMEOUT_MS = 15_000;
+
+interface DeliveryDetails {
+    subject: string;
+    language: string;
+}
 
 interface FormSubmitResponse {
     success?: boolean | string;
@@ -13,32 +16,26 @@ interface FormSubmitResponse {
 
 export async function deliverContactMessage(
     values: ContactValues,
-    locale: Locale
+    { subject, language }: DeliveryDetails
 ): Promise<boolean> {
-    const subjects = getDictionary('en').ui.contactForm.subjects;
-    const subject = subjects[values.subject as ContactSubject] ?? values.subject;
-
     try {
         const response = await fetch(FORMSUBMIT_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                Origin: SITE_URL,
-                Referer: `${SITE_URL}/contact`,
             },
             body: JSON.stringify({
                 name: values.name,
                 email: values.email,
                 subject,
-                language: LOCALE_DETAILS[locale].name,
+                language,
                 message: values.message,
                 _subject: `${SITE_NAME}: ${subject} from ${values.name}`,
                 _replyto: values.email,
                 _template: 'table',
                 _captcha: 'false',
             }),
-            cache: 'no-store',
             signal: AbortSignal.timeout(TIMEOUT_MS),
         });
         const result = (await response.json().catch(() => ({}))) as FormSubmitResponse;
@@ -46,7 +43,7 @@ export async function deliverContactMessage(
 
         if (!delivered) {
             console.error(
-                `Contact message was not delivered (status ${response.status}): ${result.message ?? 'no details'}`
+                `Contact message was not delivered: ${result.message ?? response.status}`
             );
         }
 

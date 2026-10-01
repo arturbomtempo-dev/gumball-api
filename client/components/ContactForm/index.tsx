@@ -1,6 +1,6 @@
 'use client';
 
-import { sendContactMessage } from '@/app/[lang]/contact/actions';
+import { validateContactMessage } from '@/app/[lang]/contact/actions';
 import { FormField } from '@/components/FormField';
 import { ArrowRightIcon, ChevronDownIcon } from '@/components/Icons';
 import { useI18n } from '@/hooks/useI18n';
@@ -8,11 +8,15 @@ import {
     CONTACT_FIELDS,
     CONTACT_LIMITS,
     CONTACT_SUBJECTS,
+    EMPTY_CONTACT_VALUES,
     INITIAL_CONTACT_STATE,
     type ContactErrorCode,
     type ContactField,
+    type ContactFormState,
+    type ContactSubject,
 } from '@/lib/contact';
-import { formatMessage } from '@/lib/i18n/config';
+import { deliverContactMessage } from '@/lib/contact-delivery';
+import { LOCALE_DETAILS, formatMessage } from '@/lib/i18n/config';
 import { AUTHOR } from '@/lib/site';
 import { toast } from '@/lib/toast';
 import { useActionState, useEffect, useState } from 'react';
@@ -32,7 +36,32 @@ const ERROR_VALUES: Record<ContactErrorCode, Record<string, number>> = {
 export function ContactForm() {
     const { locale, ui } = useI18n();
     const text = ui.contactForm;
-    const [state, formAction, pending] = useActionState(sendContactMessage, INITIAL_CONTACT_STATE);
+
+    async function submit(
+        _previousState: ContactFormState,
+        formData: FormData
+    ): Promise<ContactFormState> {
+        const validation = await validateContactMessage(formData);
+
+        if (validation.status === 'invalid') {
+            return { status: 'invalid', errors: validation.errors, values: validation.values };
+        }
+
+        if (validation.status === 'spam') {
+            return { status: 'success', errors: {}, values: EMPTY_CONTACT_VALUES };
+        }
+
+        const delivered = await deliverContactMessage(validation.values, {
+            subject: text.subjects[validation.values.subject as ContactSubject],
+            language: LOCALE_DETAILS[locale].name,
+        });
+
+        return delivered
+            ? { status: 'success', errors: {}, values: EMPTY_CONTACT_VALUES }
+            : { status: 'error', errors: {}, values: validation.values };
+    }
+
+    const [state, formAction, pending] = useActionState(submit, INITIAL_CONTACT_STATE);
     const [submittedState, setSubmittedState] = useState(state);
     const [messageLength, setMessageLength] = useState(state.values.message.length);
 
@@ -146,8 +175,6 @@ export function ContactForm() {
                     className={`min-h-36 resize-none border-border-strong py-3 leading-6 ${INPUT_CLASSES}`}
                 />
             </FormField>
-
-            <input type="hidden" name="locale" value={locale} />
 
             <div aria-hidden="true" className="sr-only">
                 <label htmlFor="website">{text.honeypot}</label>

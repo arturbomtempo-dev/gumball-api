@@ -37,6 +37,12 @@ export interface ContactFormState {
     values: ContactValues;
 }
 
+export interface ContactValidation {
+    status: 'invalid' | 'valid' | 'spam';
+    errors: ContactFormState['errors'];
+    values: ContactValues;
+}
+
 export const EMPTY_CONTACT_VALUES: ContactValues = {
     name: '',
     email: '',

@@ -112,10 +112,11 @@ export const ptBr = {
                 invalidTitle: 'Revise o formulário',
                 invalidDescription: 'Alguns campos precisam de atenção antes do envio.',
                 successTitle: 'Mensagem enviada',
-                successDescription: 'Obrigado pelo contato. Responderei em breve.',
-                unavailableTitle: 'Mensagem não enviada',
-                unavailableDescription:
-                    'O envio de mensagens por este formulário ainda não está disponível. Enquanto isso, escreva para {email}.',
+                successDescription:
+                    'Obrigado pelo contato! Sua mensagem foi enviada e responderei no seu e-mail o quanto antes.',
+                errorTitle: 'Mensagem não enviada',
+                errorDescription:
+                    'Algo deu errado ao enviar sua mensagem. Tente novamente em instantes ou escreva para {email}.',
             },
         },
     },

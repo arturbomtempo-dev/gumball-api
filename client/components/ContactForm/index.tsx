@@ -30,7 +30,7 @@ const ERROR_VALUES: Record<ContactErrorCode, Record<string, number>> = {
 };
 
 export function ContactForm() {
-    const { ui } = useI18n();
+    const { locale, ui } = useI18n();
     const text = ui.contactForm;
     const [state, formAction, pending] = useActionState(sendContactMessage, INITIAL_CONTACT_STATE);
     const [submittedState, setSubmittedState] = useState(state);
@@ -52,10 +52,10 @@ export function ContactForm() {
             if (firstInvalid) {
                 document.getElementById(firstInvalid)?.focus();
             }
-        } else if (state.status === 'unavailable') {
+        } else if (state.status === 'error') {
             toast.error(
-                text.toasts.unavailableTitle,
-                formatMessage(text.toasts.unavailableDescription, { email: AUTHOR.email })
+                text.toasts.errorTitle,
+                formatMessage(text.toasts.errorDescription, { email: AUTHOR.email })
             );
         }
     }, [state, text]);
@@ -146,6 +146,8 @@ export function ContactForm() {
                     className={`min-h-36 resize-none border-border-strong py-3 leading-6 ${INPUT_CLASSES}`}
                 />
             </FormField>
+
+            <input type="hidden" name="locale" value={locale} />
 
             <div aria-hidden="true" className="sr-only">
                 <label htmlFor="website">{text.honeypot}</label>

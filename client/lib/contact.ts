@@ -32,7 +32,7 @@ export type ContactErrorCode =
     | 'messageTooLong';
 
 export interface ContactFormState {
-    status: 'idle' | 'invalid' | 'unavailable' | 'success';
+    status: 'idle' | 'invalid' | 'error' | 'success';
     errors: Partial<Record<ContactField, ContactErrorCode>>;
     values: ContactValues;
 }

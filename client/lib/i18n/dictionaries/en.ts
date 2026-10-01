@@ -110,10 +110,11 @@ export const en = {
                 invalidTitle: 'Please review the form',
                 invalidDescription: 'Some fields need your attention before sending.',
                 successTitle: 'Message sent',
-                successDescription: 'Thanks for reaching out. I will get back to you soon.',
-                unavailableTitle: 'Message not sent',
-                unavailableDescription:
-                    'Sending messages from this form is not available yet. Please email {email} in the meantime.',
+                successDescription:
+                    'Thanks for reaching out! Your message is on its way and I will reply to your email as soon as possible.',
+                errorTitle: 'Message not sent',
+                errorDescription:
+                    'Something went wrong while sending your message. Please try again in a moment or email {email}.',
             },
         },
     },

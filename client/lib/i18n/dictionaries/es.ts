@@ -112,10 +112,11 @@ export const es = {
                 invalidTitle: 'Revisa el formulario',
                 invalidDescription: 'Algunos campos necesitan tu atención antes de enviar.',
                 successTitle: 'Mensaje enviado',
-                successDescription: 'Gracias por escribir. Te responderé pronto.',
-                unavailableTitle: 'Mensaje no enviado',
-                unavailableDescription:
-                    'El envío de mensajes desde este formulario todavía no está disponible. Mientras tanto, escribe a {email}.',
+                successDescription:
+                    '¡Gracias por escribir! Tu mensaje fue enviado y te responderé por correo lo antes posible.',
+                errorTitle: 'Mensaje no enviado',
+                errorDescription:
+                    'Algo salió mal al enviar tu mensaje. Inténtalo de nuevo en unos momentos o escribe a {email}.',
             },
         },
     },

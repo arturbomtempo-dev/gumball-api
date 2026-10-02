@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite it as below."
+type: software
+title: "Gumball API"
+abstract: >-
+  Gumball API is a free, read-only REST API about The Amazing World of Gumball
+  and The Wonderfully Weird World of Gumball. It serves characters, locations,
+  episodes, seasons, songs, games and in-universe media as JSON, with
+  pagination, filters, sorting, lookups by id or slug, random picks and links
+  between resources. The repository also includes the project website, with
+  interactive documentation in English, Brazilian Portuguese and Spanish.
+authors:
+  - given-names: Artur
+    family-names: Bomtempo Colen
+    email: arturbcolen@gmail.com
+    website: "https://github.com/arturbomtempo-dev"
+repository-code: "https://github.com/arturbomtempo-dev/gumball-api"
+url: "https://gumball-api.vercel.app"
+identifiers:
+  - type: url
+    value: "https://gumball-api.vercel.app"
+    description: Project website and interactive documentation.
+  - type: url
+    value: "https://gumball-api-server.vercel.app"
+    description: Production REST API.
+keywords:
+  - rest-api
+  - api
+  - gumball
+  - the-amazing-world-of-gumball
+  - cartoon-network
+  - nestjs
+  - nextjs
+  - prisma
+  - postgresql
+  - open-data
+license: MIT

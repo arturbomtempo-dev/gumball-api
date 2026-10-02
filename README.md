@@ -1,15 +1,17 @@
 # Gumball API
 
+<p align="right">Versão em português disponível <a href="README.pt.md">aqui</a>.</p>
+
 <table>
   <tr>
     <td width="800px">
       <div align="justify">
-        A <b>Gumball API</b> reúne em um só lugar os dados do universo de <i>The Amazing World of Gumball</i> e <i>The Wonderfully Weird World of Gumball</i>: <b>personagens, lugares, episódios, temporadas, músicas, jogos e mídias</b> que existem dentro da série. Todo o conteúdo foi pesquisado e escrito de forma original, em inglês, e as imagens são servidas em <b>WebP</b> por uma CDN própria. A API não exige autenticação nem chave de acesso, oferece <i>paginação</i>, <i>filtros</i>, <i>ordenação</i>, <i>busca por id ou slug</i> e <i>seleção aleatória</i> em todos os recursos, e conecta os dados entre si, como o episódio em que cada personagem aparece pela primeira vez. O repositório também traz o site oficial do projeto, com página inicial, documentação completa em inglês, português e espanhol, e painéis para testar cada rota direto no navegador.
+        The <b>Gumball API</b> brings together the data of <i>The Amazing World of Gumball</i> and <i>The Wonderfully Weird World of Gumball</i> in one place: the <b>characters, locations, episodes, seasons, songs, games and media</b> that exist within the series. All content was researched and written originally, in English, and every image is served as <b>WebP</b> from a dedicated CDN. The API requires no authentication or access key, offers <i>pagination</i>, <i>filters</i>, <i>sorting</i>, <i>lookups by id or slug</i> and <i>random picks</i> on every resource, and connects the data across resources, such as the episode where each character first appears. The repository also includes the official project website, with a home page, complete documentation in English, Portuguese and Spanish, and panels to test every route directly in the browser.
       </div>
     </td>
     <td>
       <div>
-        <img src="https://arturbomtempo-dev.github.io/arturbomtempo-cdn/assets/images/projects/gumball-api/logo.png" alt="Logo da Gumball API" width="160px"/>
+        <img src="https://arturbomtempo-dev.github.io/arturbomtempo-cdn/assets/images/projects/gumball-api/logo.png" alt="Gumball API logo" width="160px"/>
       </div>
     </td>
   </tr>
@@ -17,11 +19,11 @@
 
 ---
 
-## 🚧 Status do Projeto
+## 🚧 Project Status
 
 [![API](https://img.shields.io/website?url=https%3A%2F%2Fgumball-api-server.vercel.app&label=API&up_message=online&down_message=offline&style=for-the-badge)](https://gumball-api-server.vercel.app)
-[![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-007ec6?style=for-the-badge)](#-licença)
-![Idiomas](https://img.shields.io/badge/Idiomas-EN_%C2%B7_PT--BR_%C2%B7_ES-007ec6?style=for-the-badge)
+[![License](https://img.shields.io/badge/License-MIT-007ec6?style=for-the-badge)](#-license)
+![Languages](https://img.shields.io/badge/Languages-EN_%C2%B7_PT--BR_%C2%B7_ES-007ec6?style=for-the-badge)
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.3-007ec6?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19.2-007ec6?style=for-the-badge&logo=react&logoColor=white)
@@ -30,189 +32,189 @@
 ![NestJS](https://img.shields.io/badge/NestJS-12-007ec6?style=for-the-badge&logo=nestjs&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-7.10-007ec6?style=for-the-badge&logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-007ec6?style=for-the-badge&logo=postgresql&logoColor=white)
-![Vitest](https://img.shields.io/badge/Vitest-221_testes-007ec6?style=for-the-badge&logo=vitest&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-221_tests-007ec6?style=for-the-badge&logo=vitest&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deploy-Vercel-007ec6?style=for-the-badge&logo=vercel&logoColor=white)
 
 ---
 
-## 📚 Índice
+## 📚 Table of Contents
 
-- [Links Úteis](#-links-úteis)
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades Principais](#-funcionalidades-principais)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Useful Links](#-useful-links)
+- [About the Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [Technologies](#-technologies)
   - [Front-end](#-front-end)
   - [Back-end](#-back-end)
-  - [Infraestrutura](#-infraestrutura)
-- [Arquitetura](#-arquitetura)
-- [Instalação e Execução](#-instalação-e-execução)
-  - [Pré-requisitos](#pré-requisitos)
-  - [Variáveis de Ambiente](#-variáveis-de-ambiente)
-  - [Instalação de Dependências](#-instalação-de-dependências)
-  - [Banco de Dados](#-banco-de-dados)
-  - [Como Executar a Aplicação](#-como-executar-a-aplicação)
-- [Deploy](#-deploy)
-- [Estrutura de Pastas](#-estrutura-de-pastas)
-- [Exemplo de Uso](#-exemplo-de-uso)
-- [Testes](#-testes)
-- [Documentações Utilizadas](#-documentações-utilizadas)
-- [Autor](#-autor)
-- [Contribuição](#-contribuição)
-- [Licença](#-licença)
+  - [Infrastructure](#-infrastructure)
+- [Architecture](#-architecture)
+- [Installation and Setup](#-installation-and-setup)
+  - [Prerequisites](#prerequisites)
+  - [Environment Variables](#-environment-variables)
+  - [Installing Dependencies](#-installing-dependencies)
+  - [Database](#-database)
+  - [Running the Application](#-running-the-application)
+- [Deployment](#-deployment)
+- [Folder Structure](#-folder-structure)
+- [Usage Example](#-usage-example)
+- [Tests](#-tests)
+- [References](#-references)
+- [Author](#-author)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## 🔗 Links Úteis
+## 🔗 Useful Links
 
-- **Site e documentação:** [gumball-api.vercel.app](https://gumball-api.vercel.app)
-  Apresentação da API, documentação completa com testes interativos em cada rota e página de contato, em inglês, português e espanhol.
-- **API em produção:** [gumball-api-server.vercel.app](https://gumball-api-server.vercel.app)
-  A raiz da API lista todos os recursos disponíveis e é um bom ponto de partida.
-
----
-
-## 📝 Sobre o Projeto
-
-A Gumball API nasceu da vontade de oferecer para a série **O Incrível Mundo de Gumball** o que projetos como a [Rick and Morty API](https://rickandmortyapi.com) e a [PokéAPI](https://pokeapi.co) oferecem para seus universos: uma fonte de dados **gratuita, organizada e fácil de consumir**.
-
-Ela resolve um problema comum de quem quer criar algo sobre a série, como um app de quiz, uma enciclopédia de personagens ou um projeto de estudo: as informações existem, mas estão espalhadas em páginas feitas para leitura, e não para uso em código. Aqui, cada personagem, lugar, episódio, temporada, música, jogo e mídia tem um formato consistente, imagens padronizadas e ligações com os demais recursos.
-
-O projeto é pessoal e aberto, pensado para:
-
-- **Estudantes e desenvolvedores** que precisam de uma API real e divertida para praticar consumo de APIs REST, paginação e filtros.
-- **Fãs da série** que querem construir apps, bots ou sites sobre o universo de Elmore.
-- **Projetos de portfólio** que precisam de dados ricos, com imagens e relações entre entidades.
-
-A API é **somente leitura**: os dados são curados manualmente pelo mantenedor, o que garante consistência e evita conteúdo de outras séries.
+- **Website and documentation:** [gumball-api.vercel.app](https://gumball-api.vercel.app)
+  API overview, complete documentation with interactive tests on every route and a contact page, in English, Portuguese and Spanish.
+- **Production API:** [gumball-api-server.vercel.app](https://gumball-api-server.vercel.app)
+  The API root lists every available resource and is a good place to start.
 
 ---
 
-## ✨ Funcionalidades Principais
+## 📝 About the Project
 
-- **Sete recursos conectados:** 245 personagens, 112 lugares, 305 episódios, 8 temporadas, 156 músicas, 81 jogos e 16 mídias do universo da série.
-- **Consultas completas:** paginação, filtros por campo, ordenação crescente ou decrescente, busca por id ou slug e seleção aleatória em todas as rotas.
-- **Dados relacionados:** personagens, lugares, músicas e mídias apontam para os episódios em que aparecem, e os lugares formam uma hierarquia.
-- **Acesso livre:** sem autenticação, sem chave de API e com CORS liberado para qualquer origem.
-- **Respostas previsíveis:** o mesmo formato de paginação, filtros e erros em todas as rotas, com validação rigorosa de parâmetros.
-- **Segurança em camadas:** apenas rotas `GET`, limite de requisições por IP, cabeçalhos de segurança e acesso ao banco por um papel somente leitura protegido por RLS.
-- **Documentação interativa:** cada rota tem um painel para enviar requisições reais e ver a resposta no próprio site.
-- **Internacionalização:** site em inglês, português do Brasil e espanhol, com o idioma escolhido salvo no navegador.
-- **Tema claro e escuro:** com a preferência salva e aplicada antes da página aparecer.
-- **Página de contato:** formulário com validação no servidor e envio da mensagem por e-mail.
+The Gumball API was born from the desire to offer **The Amazing World of Gumball** what projects like the [Rick and Morty API](https://rickandmortyapi.com) and [PokéAPI](https://pokeapi.co) offer their universes: a **free, organized and easy-to-use** data source.
+
+It solves a common problem for anyone who wants to build something about the series, such as a quiz app, a character encyclopedia or a study project: the information exists, but it is scattered across pages made for reading, not for use in code. Here, every character, location, episode, season, song, game and media item has a consistent format, standardized images and links to the other resources.
+
+The project is personal and open, designed for:
+
+- **Students and developers** who need a real and fun API to practice consuming REST APIs, pagination and filters.
+- **Fans of the series** who want to build apps, bots or websites about the world of Elmore.
+- **Portfolio projects** that need rich data, with images and relationships between entities.
+
+The API is **read-only**: the data is manually curated by the maintainer, which ensures consistency and keeps content from other series out.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## ✨ Key Features
+
+- **Seven connected resources:** 245 characters, 112 locations, 305 episodes, 8 seasons, 156 songs, 81 games and 16 media items from the series universe.
+- **Complete queries:** pagination, field filters, ascending or descending sorting, lookups by id or slug and random picks on every route.
+- **Related data:** characters, locations, songs and media point to the episodes they appear in, and locations form a hierarchy.
+- **Open access:** no authentication, no API key and CORS enabled for every origin.
+- **Predictable responses:** the same pagination, filter and error format on every route, with strict parameter validation.
+- **Layered security:** `GET` routes only, rate limiting per IP, security headers and database access through a read-only role protected by RLS.
+- **Interactive documentation:** every route has a panel to send real requests and see the response right on the website.
+- **Internationalization:** website in English, Brazilian Portuguese and Spanish, with the chosen language saved in the browser.
+- **Light and dark themes:** with the preference saved and applied before the page appears.
+- **Contact page:** form with server-side validation and email delivery.
+
+---
+
+## 🛠 Technologies
 
 ### 💻 Front-end
 
-- **Framework:** Next.js 16 (App Router) com React 19
-- **Linguagem:** TypeScript
-- **Estilização:** Tailwind CSS 4, com tokens de cor para os temas claro e escuro
-- **Internacionalização:** dicionários tipados próprios, com rotas por idioma
-- **Qualidade:** ESLint e Prettier
+- **Framework:** Next.js 16 (App Router) with React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4, with color tokens for the light and dark themes
+- **Internationalization:** custom typed dictionaries, with routes per language
+- **Quality:** ESLint and Prettier
 
 ### 🔌 Back-end
 
-- **Runtime:** Node.js 22.18 ou superior
+- **Runtime:** Node.js 22.18 or later
 - **Framework:** NestJS 12 (ESM, Express)
-- **Banco de Dados:** PostgreSQL hospedado no Supabase
-- **ORM:** Prisma 7 com o adaptador `pg`
-- **Validação:** `class-validator` nas requisições e `zod` nas variáveis de ambiente
-- **Segurança:** Helmet, CORS somente leitura, limite de requisições, papel de banco somente leitura e Row Level Security
-- **Logs:** `nestjs-pino`, com logs estruturados
-- **Qualidade:** Vitest, oxlint e Prettier
+- **Database:** PostgreSQL hosted on Supabase
+- **ORM:** Prisma 7 with the `pg` adapter
+- **Validation:** `class-validator` for requests and `zod` for environment variables
+- **Security:** Helmet, read-only CORS, rate limiting, read-only database role and Row Level Security
+- **Logging:** `nestjs-pino`, with structured logs
+- **Quality:** Vitest, oxlint and Prettier
 
-### 🌐 Infraestrutura
+### 🌐 Infrastructure
 
-- **Hospedagem:** Vercel (API como Vercel Function e site em Next.js)
-- **Banco de Dados:** Supabase (PostgreSQL gerenciado, com pooler de conexões)
-- **Imagens:** CDN própria no GitHub Pages, com arquivos em WebP
+- **Hosting:** Vercel (API as a Vercel Function and website on Next.js)
+- **Database:** Supabase (managed PostgreSQL, with connection pooling)
+- **Images:** dedicated CDN on GitHub Pages, with WebP files
 
 ---
 
-## 🏗 Arquitetura
+## 🏗 Architecture
 
-O repositório é um monorepo com dois projetos independentes, cada um com seu próprio deploy na Vercel.
+The repository is a monorepo with two independent projects, each with its own deployment on Vercel.
 
 ```mermaid
 flowchart LR
-    visitor["Navegador"] --> site["Site<br/>Next.js"]
+    visitor["Browser"] --> site["Website<br/>Next.js"]
     visitor -- "GET, JSON" --> api["API<br/>NestJS"]
-    site -- "dados com cache de 1 hora" --> api
-    api -- "Prisma, papel somente leitura" --> db[("PostgreSQL<br/>Supabase")]
-    visitor -- "imagens WebP" --> cdn["CDN<br/>GitHub Pages"]
+    site -- "data cached for 1 hour" --> api
+    api -- "Prisma, read-only role" --> db[("PostgreSQL<br/>Supabase")]
+    visitor -- "WebP images" --> cdn["CDN<br/>GitHub Pages"]
 ```
 
 **API (`server`)**
 
-- Organizada em **módulos por recurso** (`characters`, `locations`, `episodes`, `seasons`, `songs`, `games` e `media`), todos seguindo as mesmas camadas: **controller, service, repository e mapper**, com DTOs para requisições e respostas. O Prisma só é usado dentro dos repositories.
-- Os valores de enum são armazenados em maiúsculas no banco e expostos em kebab-case, sempre pelo mesmo conversor compartilhado.
-- As ligações entre recursos são chaves estrangeiras expostas como pequenos objetos de referência, com o caminho para o item completo.
-- A segurança é aplicada em quatro camadas: só existem rotas `GET`, o CORS só permite métodos de leitura, os papéis do banco só recebem `SELECT` e todas as tabelas têm RLS com uma única política de leitura.
-- Na Vercel, a aplicação roda como uma única Vercel Function a partir de um bundle ESM gerado no build.
+- Organized into **one module per resource** (`characters`, `locations`, `episodes`, `seasons`, `songs`, `games` and `media`), all following the same layers: **controller, service, repository and mapper**, with DTOs for requests and responses. Prisma is only used inside repositories.
+- Enum values are stored in uppercase in the database and exposed in kebab-case, always through the same shared converter.
+- Links between resources are foreign keys exposed as small reference objects, with the path to the full item.
+- Security is applied in four layers: only `GET` routes exist, CORS only allows read methods, database roles only receive `SELECT` and every table has RLS with a single read policy.
+- On Vercel, the application runs as a single Vercel Function from an ESM bundle generated at build time.
 
-**Site (`client`)**
+**Website (`client`)**
 
-- Construído com o **App Router** do Next.js, com todas as páginas geradas estaticamente para cada idioma e atualizadas a cada hora com os dados da API.
-- O inglês fica na raiz (`/docs`) e os demais idiomas usam prefixo (`/pt-br/docs`, `/es/docs`). Um `proxy` do Next.js resolve as rotas e lembra o idioma escolhido.
-- Os textos ficam em **dicionários tipados**: se uma tradução estiver faltando, o build falha.
-- Os dados técnicos da documentação (campos, tipos, filtros e exemplos) são definidos uma única vez e combinados com as descrições de cada idioma.
-- O formulário de contato usa uma **Server Action**, que valida os dados no servidor e envia a mensagem por e-mail.
-
----
-
-## 🔧 Instalação e Execução
-
-### Pré-requisitos
-
-- **Node.js:** versão **22.18** ou superior
-- **npm:** instalado junto com o Node.js
-- **Projeto no Supabase:** com o papel somente leitura `gumball_api_reader` configurado, necessário apenas para rodar a API
+- Built with the Next.js **App Router**, with every page statically generated for each language and refreshed hourly with API data.
+- English lives at the root (`/docs`) and the other languages use a prefix (`/pt-br/docs`, `/es/docs`). A Next.js `proxy` resolves the routes and remembers the chosen language.
+- All text lives in **typed dictionaries**: if a translation is missing, the build fails.
+- The technical documentation data (fields, types, filters and examples) is defined once and combined with the descriptions of each language.
+- The contact form validates the data on the server with a **Server Action** and then sends the message by email.
 
 ---
 
-### 🔑 Variáveis de Ambiente
+## 🔧 Installation and Setup
 
-Cada projeto tem um arquivo `.env.example` com todas as variáveis. Copie-o para `.env` e preencha os valores.
+### Prerequisites
+
+- **Node.js:** version **22.18** or later
+- **npm:** installed with Node.js
+- **Supabase project:** with the read-only `gumball_api_reader` role configured, only required to run the API
+
+---
+
+### 🔑 Environment Variables
+
+Each project has a `.env.example` file with every variable. Copy it to `.env` and fill in the values.
 
 #### API (`server`)
 
-| Variável                 | Obrigatória   | Descrição                                                                                              | Exemplo                                   |
-| :----------------------- | :------------ | :----------------------------------------------------------------------------------------------------- | :---------------------------------------- |
-| `DATABASE_URL`           | Sim           | Conexão do papel somente leitura `gumball_api_reader` pelo pooler de transações (porta 6543).          | `postgresql://gumball_api_reader...:6543` |
-| `DATABASE_MIGRATION_URL` | Apenas na CLI | Conexão usada pelo Prisma CLI e pela auditoria de segurança (porta 5432). Nunca configure em produção. | `postgresql://postgres...:5432`           |
-| `DATABASE_SSL_CA`        | Recomendada   | Certificado raiz do Supabase (PEM).                                                                    | `-----BEGIN CERTIFICATE-----...`          |
-| `DATABASE_POOL_MAX`      | Não           | Máximo de conexões por instância.                                                                      | `10` (use `2` na Vercel)                  |
-| `NODE_ENV`               | Não           | Ambiente de execução.                                                                                  | `production`                              |
-| `PORT`                   | Não           | Porta do servidor local.                                                                               | `3000`                                    |
-| `LOG_LEVEL`              | Não           | Nível dos logs.                                                                                        | `info`                                    |
-| `CORS_ORIGINS`           | Não           | `*` ou uma lista de origens separadas por vírgula.                                                     | `*`                                       |
-| `TRUST_PROXY_HOPS`       | Não           | Quantidade de proxies na frente da API.                                                                | `1` na Vercel                             |
-| `THROTTLE_TTL_MS`        | Não           | Janela do limite de requisições, em milissegundos.                                                     | `60000`                                   |
-| `THROTTLE_LIMIT`         | Não           | Requisições permitidas por janela e por IP.                                                            | `100`                                     |
+| Variable                 | Required    | Description                                                                                         | Example                                   |
+| :----------------------- | :---------- | :-------------------------------------------------------------------------------------------------- | :---------------------------------------- |
+| `DATABASE_URL`           | Yes         | Connection for the read-only `gumball_api_reader` role through the transaction pooler (port 6543). | `postgresql://gumball_api_reader...:6543` |
+| `DATABASE_MIGRATION_URL` | CLI only    | Connection used by the Prisma CLI and the security audit (port 5432). Never set it in production.  | `postgresql://postgres...:5432`           |
+| `DATABASE_SSL_CA`        | Recommended | Supabase root certificate (PEM).                                                                    | `-----BEGIN CERTIFICATE-----...`          |
+| `DATABASE_POOL_MAX`      | No          | Maximum connections per instance.                                                                   | `10` (use `2` on Vercel)                  |
+| `NODE_ENV`               | No          | Runtime environment.                                                                                | `production`                              |
+| `PORT`                   | No          | Local server port.                                                                                  | `3000`                                    |
+| `LOG_LEVEL`              | No          | Log level.                                                                                          | `info`                                    |
+| `CORS_ORIGINS`           | No          | `*` or a comma-separated list of origins.                                                           | `*`                                       |
+| `TRUST_PROXY_HOPS`       | No          | Number of proxies in front of the API.                                                              | `1` on Vercel                             |
+| `THROTTLE_TTL_MS`        | No          | Rate limit window, in milliseconds.                                                                 | `60000`                                   |
+| `THROTTLE_LIMIT`         | No          | Requests allowed per window and per IP.                                                             | `100`                                     |
 
-#### Site (`client`)
+#### Website (`client`)
 
-Todas as variáveis do site são opcionais.
+All website variables are optional.
 
-| Variável               | Descrição                                                                                     | Exemplo                                 |
-| :--------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------- |
-| `NEXT_PUBLIC_API_URL`  | URL base da API consumida pelo site. O padrão é a API em produção.                            | `https://gumball-api-server.vercel.app` |
-| `NEXT_PUBLIC_SITE_URL` | URL pública do site, usada no canonical, no `hreflang` e no sitemap. Use com domínio próprio. | `https://meu-dominio.com`               |
+| Variable               | Description                                                                                                 | Example                                 |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------- | :-------------------------------------- |
+| `NEXT_PUBLIC_API_URL`  | Base URL of the API used by the website. Defaults to the production API.                                    | `https://gumball-api-server.vercel.app` |
+| `NEXT_PUBLIC_SITE_URL` | Public URL of the website, used for the canonical URL, `hreflang` and sitemap. Use it with a custom domain. | `https://my-domain.com`                 |
 
 ---
 
-### 📦 Instalação de Dependências
+### 📦 Installing Dependencies
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
 
 ```bash
 git clone https://github.com/arturbomtempo-dev/gumball-api.git
 cd gumball-api
 ```
 
-2. **Instale as dependências de cada projeto:**
+2. **Install the dependencies of each project:**
 
 ```bash
 cd server
@@ -223,30 +225,30 @@ npm install
 
 ---
 
-### 💾 Banco de Dados
+### 💾 Database
 
-O banco de dados é um PostgreSQL no Supabase. O schema é versionado com migrations do Prisma, e cada tabela é criada já com RLS e com a política de leitura pública.
+The database is PostgreSQL on Supabase. The schema is versioned with Prisma migrations, and every table is created with RLS and the public read policy already in place.
 
-1. **Aplique as migrations:**
+1. **Apply the migrations:**
 
 ```bash
 cd server
 npm run db:migrate:deploy
 ```
 
-2. **Audite as regras de segurança:**
+2. **Audit the security rules:**
 
 ```bash
 npm run db:verify-security
 ```
 
-A auditoria confere permissões, políticas e RLS, e tenta escrever de verdade com cada papel público. Ela falha se qualquer escrita for aceita.
+The audit checks permissions, policies and RLS, and attempts real writes with every public role. It fails if any write is accepted.
 
 ---
 
-### ⚡ Como Executar a Aplicação
+### ⚡ Running the Application
 
-Execute a API e o site em dois terminais separados.
+Run the API and the website in two separate terminals.
 
 #### Terminal 1: API
 
@@ -255,35 +257,35 @@ cd server
 npm run start:dev
 ```
 
-A API fica disponível em **http://localhost:3000**.
+The API is available at **http://localhost:3000**.
 
-#### Terminal 2: Site
+#### Terminal 2: Website
 
-Para usar a API local, crie o arquivo `client/.env.local` com `NEXT_PUBLIC_API_URL=http://localhost:3000` e rode o site em outra porta:
+To use the local API, create the `client/.env.local` file with `NEXT_PUBLIC_API_URL=http://localhost:3000` and run the website on another port:
 
 ```bash
 cd client
 npx next dev -p 3001
 ```
 
-O site fica disponível em **http://localhost:3001**. Sem a variável, o site usa a API em produção e pode ser iniciado com `npm run dev` na porta padrão.
+The website is available at **http://localhost:3001**. Without the variable, the website uses the production API and can be started with `npm run dev` on the default port.
 
 ---
 
-## 🚀 Deploy
+## 🚀 Deployment
 
-A API e o site são publicados como **dois projetos separados na Vercel**, a partir do mesmo repositório.
+The API and the website are deployed as **two separate projects on Vercel**, from the same repository.
 
 1. **API:**
-   - Crie um projeto na Vercel com **Root Directory** igual a `server`. O arquivo `server/vercel.json` já define o build, a região `gru1` (São Paulo, próxima ao banco) e o redirecionamento de todas as rotas para a função.
-   - Configure as variáveis `DATABASE_URL`, `DATABASE_SSL_CA`, `NODE_ENV=production`, `DATABASE_POOL_MAX=2` e `TRUST_PROXY_HOPS=1`.
-   - Nunca configure `DATABASE_MIGRATION_URL` na Vercel. As migrations são aplicadas apenas pela linha de comando.
+   - Create a Vercel project with the **Root Directory** set to `server`. The `server/vercel.json` file already defines the build, the `gru1` region (São Paulo, close to the database) and the rewrite of every route to the function.
+   - Set the `DATABASE_URL`, `DATABASE_SSL_CA`, `NODE_ENV=production`, `DATABASE_POOL_MAX=2` and `TRUST_PROXY_HOPS=1` variables.
+   - Never set `DATABASE_MIGRATION_URL` on Vercel. Migrations are only applied from the command line.
 
-2. **Site:**
-   - Crie outro projeto na Vercel com **Root Directory** igual a `client`. O Next.js é detectado automaticamente.
-   - Configure `NEXT_PUBLIC_SITE_URL` caso use um domínio próprio.
+2. **Website:**
+   - Create another Vercel project with the **Root Directory** set to `client`. Next.js is detected automatically.
+   - Set `NEXT_PUBLIC_SITE_URL` if you use a custom domain.
 
-3. **Validação local antes do deploy:**
+3. **Local validation before deploying:**
 
 ```bash
 cd server
@@ -295,63 +297,65 @@ npm run lint && npx tsc --noEmit && npm run build
 
 ---
 
-## 📂 Estrutura de Pastas
+## 📂 Folder Structure
 
 ```
 .
-├── LICENSE.md                     # Licença MIT do projeto.
-├── README.md                      # Documentação principal.
+├── CITATION.cff                   # Citation metadata for the project.
+├── LICENSE.md                     # MIT license of the project.
+├── README.md                      # Main documentation, in English.
+├── README.pt.md                   # Main documentation, in Portuguese.
 │
-├── server                         # API REST (NestJS)
-│   ├── api/index.js               # Ponto de entrada da Vercel Function.
+├── server                         # REST API (NestJS)
+│   ├── api/index.js               # Vercel Function entry point.
 │   ├── prisma
-│   │   ├── schema.prisma          # Modelo de dados.
-│   │   └── migrations             # Migrations com schema, RLS e políticas de leitura.
+│   │   ├── schema.prisma          # Data model.
+│   │   └── migrations             # Migrations with schema, RLS and read policies.
 │   ├── scripts
-│   │   ├── bundle-serverless.ts   # Gera o bundle ESM usado na Vercel.
-│   │   └── verify-database-security.ts  # Audita as regras de segurança do banco.
+│   │   ├── bundle-serverless.ts   # Generates the ESM bundle used on Vercel.
+│   │   └── verify-database-security.ts  # Audits the database security rules.
 │   ├── src
-│   │   ├── main.ts                # Servidor local.
-│   │   ├── serverless.ts          # Handler da Vercel Function.
-│   │   ├── bootstrap              # Criação do app, segurança, CORS, validação e logs.
-│   │   ├── common                 # Paginação, ordenação, validações, pipes e filtros de erro.
-│   │   ├── config                 # Variáveis de ambiente validadas com zod.
+│   │   ├── main.ts                # Local server.
+│   │   ├── serverless.ts          # Vercel Function handler.
+│   │   ├── bootstrap              # App creation, security, CORS, validation and logging.
+│   │   ├── common                 # Pagination, sorting, validation, pipes and error filters.
+│   │   ├── config                 # Environment variables validated with zod.
 │   │   ├── database               # PrismaService.
-│   │   └── modules                # Um módulo por recurso, mais a rota raiz.
-│   ├── test                       # Testes end-to-end e fixtures.
-│   ├── .env.example               # Variáveis de ambiente da API.
-│   └── vercel.json                # Configuração de deploy da API.
+│   │   └── modules                # One module per resource, plus the root route.
+│   ├── test                       # End-to-end tests and fixtures.
+│   ├── .env.example               # API environment variables.
+│   └── vercel.json                # API deployment configuration.
 │
-└── client                         # Site e documentação (Next.js)
+└── client                         # Website and documentation (Next.js)
     ├── app
-    │   ├── [lang]                 # Páginas por idioma: início, documentação, contato e 404.
-    │   ├── icon.tsx               # Favicon gerado a partir da logo.
-    │   ├── opengraph-image.tsx    # Imagem de compartilhamento gerada a partir da logo.
-    │   ├── sitemap.ts             # Sitemap com todas as páginas em todos os idiomas.
-    │   └── globals.css            # Tokens de cor dos temas claro e escuro.
-    ├── components                 # Um componente por pasta, em PascalCase.
-    ├── hooks                      # Hooks de seção ativa e de idioma.
+    │   ├── [lang]                 # Pages per language: home, documentation, contact and 404.
+    │   ├── icon.tsx               # Favicon generated from the logo.
+    │   ├── opengraph-image.tsx    # Social preview image generated from the logo.
+    │   ├── sitemap.ts             # Sitemap with every page in every language.
+    │   └── globals.css            # Color tokens for the light and dark themes.
+    ├── components                 # One component per folder, in PascalCase.
+    ├── hooks                      # Active section and language hooks.
     ├── lib
-    │   ├── i18n                   # Configuração de idiomas, dicionários e metadados.
-    │   ├── docs.ts                # Dados técnicos da documentação de cada recurso.
-    │   ├── api.ts                 # Consultas à API com cache.
-    │   └── contact.ts             # Validação do formulário de contato.
-    ├── public/logo.png            # Logo do projeto.
-    ├── proxy.ts                   # Resolução de idioma nas rotas.
-    └── .env.example               # Variáveis de ambiente do site.
+    │   ├── i18n                   # Language configuration, dictionaries and metadata.
+    │   ├── docs.ts                # Technical documentation data for each resource.
+    │   ├── api.ts                 # Cached API requests.
+    │   └── contact.ts             # Contact form validation.
+    ├── public/logo.png            # Project logo.
+    ├── proxy.ts                   # Language resolution for routes.
+    └── .env.example               # Website environment variables.
 ```
 
 ---
 
-## 🎥 Exemplo de Uso
+## 🎥 Usage Example
 
-Uma requisição para buscar um personagem pelo id:
+A request to fetch a character by id:
 
 ```bash
 curl https://gumball-api-server.vercel.app/characters/1
 ```
 
-**Resposta (resumida):**
+**Response (shortened):**
 
 ```json
 {
@@ -372,7 +376,7 @@ curl https://gumball-api-server.vercel.app/characters/1
 }
 ```
 
-Filtros, ordenação e paginação podem ser combinados na mesma requisição:
+Filters, sorting and pagination can be combined in the same request:
 
 ```bash
 curl "https://gumball-api-server.vercel.app/episodes?season=1&sort=-usAirDate&limit=5"
@@ -380,66 +384,66 @@ curl "https://gumball-api-server.vercel.app/episodes?season=1&sort=-usAirDate&li
 
 ---
 
-## 🧪 Testes
+## 🧪 Tests
 
-### Testes Unitários
+### Unit Tests
 
-Cobrem mappers, services e utilitários compartilhados da API.
+Cover the API mappers, services and shared utilities.
 
 ```bash
 cd server
 npm test
 ```
 
-### Testes End-to-End
+### End-to-End Tests
 
-Sobem a aplicação NestJS completa com o banco simulado e validam rotas, filtros, validação de parâmetros, cabeçalhos de segurança e o bloqueio de métodos de escrita.
+Start the complete NestJS application with a mocked database and validate routes, filters, parameter validation, security headers and the blocking of write methods.
 
 ```bash
 cd server
 npm run test:e2e
 ```
 
-_Ferramenta utilizada: Vitest, com Supertest nos testes end-to-end. São 68 testes unitários e 153 testes end-to-end._
+_Tools used: Vitest, with Supertest for the end-to-end tests. There are 68 unit tests and 153 end-to-end tests._
 
 ---
 
-## 🔗 Documentações Utilizadas
+## 🔗 References
 
-- **Framework (Back-end):** [Documentação Oficial do **NestJS**](https://docs.nestjs.com)
-- **ORM:** [Documentação Oficial do **Prisma**](https://www.prisma.io/docs)
-- **Banco de Dados:** [Documentação do **Supabase**](https://supabase.com/docs)
-- **Framework (Front-end):** [Documentação Oficial do **Next.js**](https://nextjs.org/docs)
-- **Estilização:** [Documentação do **Tailwind CSS**](https://tailwindcss.com/docs)
-- **Testes:** [Documentação do **Vitest**](https://vitest.dev)
-- **Deploy:** [Documentação da **Vercel**](https://vercel.com/docs)
-- **Padrão de Commits:** [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/)
+- **Framework (Back-end):** [Official **NestJS** Documentation](https://docs.nestjs.com)
+- **ORM:** [Official **Prisma** Documentation](https://www.prisma.io/docs)
+- **Database:** [**Supabase** Documentation](https://supabase.com/docs)
+- **Framework (Front-end):** [Official **Next.js** Documentation](https://nextjs.org/docs)
+- **Styling:** [**Tailwind CSS** Documentation](https://tailwindcss.com/docs)
+- **Testing:** [**Vitest** Documentation](https://vitest.dev)
+- **Deployment:** [**Vercel** Documentation](https://vercel.com/docs)
+- **Commit Convention:** [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ---
 
-## 👥 Autor
+## 👥 Author
 
-| Nome                 | Foto                                                                                                                  | GitHub                                                                                                                                                                                            | LinkedIn                                                                                                                                                                                                   | Gmail                                                                                                                                                                                    |
+| Name                 | Photo                                                                                                                 | GitHub                                                                                                                                                                                            | LinkedIn                                                                                                                                                                                                   | Gmail                                                                                                                                                                                    |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Artur Bomtempo Colen | <div align="center"><img src="https://avatars.githubusercontent.com/u/96635074?v=4" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/arturbomtempo-dev"><img src="https://arturbomtempo-dev.github.io/arturbomtempo-cdn/assets/icons/github.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/artur-bomtempo/"><img src="https://arturbomtempo-dev.github.io/arturbomtempo-cdn/assets/icons/linkedin.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:arturbcolen@gmail.com"><img src="https://arturbomtempo-dev.github.io/arturbomtempo-cdn/assets/icons/gmail.png" width="50px" height="50px"></a></div> |
 
 ---
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-Os dados da API são curados manualmente pelo mantenedor, então a melhor forma de contribuir com o conteúdo é **abrir uma issue** apontando a informação errada ou faltante, de preferência com a fonte.
+The API data is manually curated by the maintainer, so the best way to contribute to the content is to **open an issue** pointing out the wrong or missing information, ideally with a source.
 
-Para contribuir com código:
+To contribute code:
 
-1. Faça um `fork` do projeto.
-2. Crie uma branch para sua alteração (`git checkout -b feat/minha-alteracao`).
-3. Faça commit das mudanças seguindo o padrão [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (`git commit -m 'feat: adiciona filtro por temporada'`).
-4. Rode as validações do projeto alterado (formatação, lint, typecheck, testes e build).
-5. Faça o `push` para a branch (`git push origin feat/minha-alteracao`).
-6. Abra um **Pull Request** descrevendo a mudança.
+1. `Fork` the project.
+2. Create a branch for your change (`git checkout -b feat/my-change`).
+3. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) convention (`git commit -m 'feat: add season filter'`).
+4. Run the checks of the project you changed (formatting, lint, typecheck, tests and build).
+5. `Push` the branch (`git push origin feat/my-change`).
+6. Open a **Pull Request** describing the change.
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto é distribuído sob a **[Licença MIT](LICENSE.md)**.
+This project is distributed under the **[MIT License](LICENSE.md)**.

@@ -16,6 +16,7 @@ export const AUTHOR = {
     name: 'Artur Bomtempo',
     fullName: 'Artur Bomtempo Colen',
     email: 'arturbcolen@gmail.com',
+    website: 'https://www.arturbomtempo.dev/',
     github: 'https://github.com/arturbomtempo-dev',
     linkedin: 'https://www.linkedin.com/in/artur-bomtempo/',
     instagram: 'https://www.instagram.com/arturbomtempo.dev',

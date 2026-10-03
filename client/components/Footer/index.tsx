@@ -43,7 +43,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
                     <p className="text-subtle">
                         {dictionary.footer.madeBy}{' '}
                         <a
-                            href={AUTHOR.github}
+                            href={AUTHOR.website}
                             target="_blank"
                             rel="noreferrer"
                             className="text-muted transition-colors hover:text-foreground"
